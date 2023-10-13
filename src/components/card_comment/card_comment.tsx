@@ -1,4 +1,4 @@
-export const CardComment = () => {
+export const card_comment = () => {
 
     return (
         <li>

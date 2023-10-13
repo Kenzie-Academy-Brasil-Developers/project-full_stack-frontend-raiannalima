@@ -1,4 +1,4 @@
-export const header_profile = () => {
+export const Header_profile = () => {
     return (
         <header>
             <div className="header_home_logo">

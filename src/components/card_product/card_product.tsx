@@ -1,4 +1,4 @@
-export const CardAnouncement = () => {
+export const card_product = () => {
 
     return (
         <li>
