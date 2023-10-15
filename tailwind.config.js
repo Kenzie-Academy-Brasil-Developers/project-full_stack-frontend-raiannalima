@@ -12,7 +12,7 @@ export default {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "car-homepage": "url('./src/assets/car.png')",
         "gradient-background-homepage": "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(204,208,209,1) 100%)",
-        "testandu": "url('./src/assets/car.png'), linear-gradient(#eb01a5, #d13531)"
+        "gradient-background-product": "linear-gradient(180deg, #4529E6 31.25%, #F1F3F5 31.26%, #F1F3F5 100%)",
       },
       colors: {
         brand1: "#4529E6",
