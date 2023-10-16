@@ -14,7 +14,7 @@ export const RoutesMain = () => {
             <Route path="/user" element={<Register />}></Route>
             <Route path="/product" element={<Product />}></Route>
             <Route path="/profile-user" element={<ProfileViewUser />}></Route>
-            <Route path="profile-advertiser" element={<ProfileViewAdmin />}></Route>
+            <Route path="/profile-advertiser" element={<ProfileViewAdmin />}></Route>
         </Routes>
     )
 }

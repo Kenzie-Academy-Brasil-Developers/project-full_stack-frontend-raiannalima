@@ -51,6 +51,7 @@ export default {
         random11: "#5700E3",
         random12: "#30007D",
         transparent: "rgba(0,0,0,0.0)",
+        modalWrapper: "rgba(0, 0, 0, 0.5)",
       },
     },
   },
