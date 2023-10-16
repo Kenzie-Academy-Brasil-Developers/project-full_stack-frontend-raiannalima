@@ -22,10 +22,10 @@ export const Product = () => {
                             </h2>
                             <div className="flex justify-between mb-6">
                                 <div>
-                                    <span className="py-1 px-2 bg-brand4 text-brand1 text-sm font-medium mr-[0.75rem]">
+                                    <span className="py-1 px-2 bg-brand4 text-brand1 text-sm font-medium rounded mr-[0.75rem]">
                                         2013
                                     </span>
-                                    <span className="py-1 px-2 bg-brand4 text-brand1 text-sm font-medium">
+                                    <span className="py-1 px-2 bg-brand4 text-brand1 text-sm font-medium rounded">
                                         0 KM
                                     </span>
                                 </div>

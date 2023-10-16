@@ -1,9 +1,9 @@
 import { Header_profile } from "../../components/header_profile/header_profile"
 import euuu from "../../assets/euuu.jpeg"
-import { Card_product } from "../../components/card_product/card_product"
+import { Card_product_advertiser } from "../../components/card_product_advertiser/card_product_advertiser"
 import { Footer } from "../../components/footer/footer"
 
-export const ProfileViewUser = () => {
+export const ProfileViewAdmin = () => {
     return (
         <>
             <Header_profile>
@@ -30,21 +30,16 @@ export const ProfileViewUser = () => {
                         Anúncios
                     </h3>
                     <ul className="flex flex-wrap gap-12 justify-center items-center">
-                        <Card_product>
-                        </Card_product>
-                        <Card_product>
-                        </Card_product>
-                        <Card_product>
-                        </Card_product>
-                        <Card_product>
-                        </Card_product>
-                        <Card_product>
-                        </Card_product>
-                        <Card_product>
-                        </Card_product>
+                        <Card_product_advertiser></Card_product_advertiser>
+                        <Card_product_advertiser></Card_product_advertiser>
+                        <Card_product_advertiser></Card_product_advertiser>
+                        <Card_product_advertiser></Card_product_advertiser>
+                        <Card_product_advertiser></Card_product_advertiser>
+                        <Card_product_advertiser></Card_product_advertiser>
                     </ul>
                 </section>
-                <Footer></Footer>
+                <Footer>
+                </Footer>
             </div>
         </>
     )
