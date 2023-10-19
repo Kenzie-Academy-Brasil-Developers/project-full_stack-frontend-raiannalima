@@ -2,12 +2,13 @@ import { Header_profile } from "../../components/header_profile/header_profile"
 import euuu from "../../assets/euuu.jpeg"
 import { Card_product_advertiser } from "../../components/card_product_advertiser/card_product_advertiser"
 import { Footer } from "../../components/footer/footer"
+import { Modal_create_anouncement } from "../../components/modal_create_anouncement/modal_create_anouncement"
 
 export const ProfileViewAdmin = () => {
     return (
         <>
-            <Header_profile>
-            </Header_profile>
+            <Modal_create_anouncement />
+            <Header_profile />
             <div className="h-full w-full min-h-screen bg-gradient-background-product-2 pt-[4.6875rem]">
                 <section className="rounded bg-grey10 container-page-user py-11 pl-[2.5625rem] pr-[2.5625rem]">
                     <img src={euuu} className="w-[104px] h-[104px] rounded-[50%] mb-6">

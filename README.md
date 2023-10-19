@@ -1,27 +1,34 @@
-# React + TypeScript + Vite
+# Projeto Full-Stack Frontend Motors Shop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é um projeto denominado Motors Shop e trata-se de uma plataforma de e-commerce para a compra e venda de carros.
+Aqui nesta documentação você encontrará as referências da parte frotend do projeto. 
+Para ter acesso ao backend do projeto, entre no link abaixo: 
+- (https://github.com/Kenzie-Academy-Brasil-Developers/project-full_stack-backend-raiannalima).
 
-Currently, two official plugins are available:
+## Tecnologias utilizadas: 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React (https://react.dev/);
+- TypeScript (https://www.typescriptlang.org/);
+- Zod (https://zod.dev/);
+- Styled Components (https://styled-components.com/);
+- Tailwind (https://tailwindcss.com/);
 
-## Expanding the ESLint configuration
+## Iniciando o projeto - Rodando a API:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- No terminal, digite o comando para instalar as dependências: 
+```bash
 
-- Configure the top-level `parserOptions` property like this:
+npm install
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Em seguida, digite o comando para rodar o servidor: 
+```bash
+
+npm run dev
+
+```
+
+## Conhecendo o projeto - Rotas da API: 
+
+### Rotas de usuário: 

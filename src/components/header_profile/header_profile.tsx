@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom"
 import avatar from "../../assets/avatar.png";
+import { useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
 
 export const Header_profile = () => {
+    const { user } = useContext(UserContext);
+
     return (
         <header className="bg-grey10 h-20 w-full border-b-2 border-grey6">
             <div className="container flex items-center h-full justify-between">
@@ -13,9 +17,11 @@ export const Header_profile = () => {
                     </Link>
                 </div>
                 <div className="header_home_nav border-l-2 border-grey6 h-full flex items-center">
-                    <img src={avatar} className="mr-[0.5rem] ml-[2.75rem]"></img>
+                    <div className="w-8 h-8 mr-[0.5rem] ml-[2.75rem] flex justify-center items-center bg-brand1 rounded-[50%] text-sm text-whiteFixed font-medium">
+                        {user?.name.charAt(0)}
+                    </div>
                     <span className="text-grey2 text-base font-normal">
-                        Samuel Leão
+                        {user?.name}
                     </span>
                 </div>
             </div>

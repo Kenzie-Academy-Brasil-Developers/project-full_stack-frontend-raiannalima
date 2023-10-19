@@ -1,7 +1,34 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { zodResolver } from "@hookform/resolvers/zod";
+import { anouncementFormSchema } from "../../schemas/anouncement_schema";
+import { useForm } from "react-hook-form";
+
 export const Modal_create_anouncement = () => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(anouncementFormSchema)
+    })
+
+    const submit = (formData: any) => {
+        console.log(formData)
+
+        const year = parseFloat(formData.year);
+        formData.year = year
+
+        const mileage = parseFloat(formData.mileage);
+        formData.mileage = mileage
+
+        const price_fipe = parseFloat(formData.price_fipe);
+        formData.price_fipe = price_fipe
+
+        const price = parseFloat(formData.price);
+        formData.price = price
+
+    }
+
     return (
         <div className="modal-wrapper w-full h-full bg-modalWrapper fixed top-0 left-0 flex justify-center overflow-auto">
-            <div className="modal w-[32.5rem] h-[72.625rem] bg-whiteFixed rounded-lg py-4 px-6 mt-[5rem] mb-[5rem]">
+            <div className="modal w-[32.5rem] h-[84.625rem] bg-whiteFixed rounded-lg py-4 px-6 mt-[5rem] mb-[5rem]">
                 <div className="modal-header flex justify-between mb-[1.0625rem]">
                     <h2 className="font-lexend text-grey1 text-base font-medium">
                         Criar anúncio
@@ -11,7 +38,7 @@ export const Modal_create_anouncement = () => {
                     </button>
                 </div>
                 <div className="modal-main">
-                    <form>
+                    <form onSubmit={handleSubmit(submit)}>
                         <fieldset className="flex flex-col">
                             <legend className="text-sm text-[#000] font-medium mb-6">
                                 Informações do veículo
@@ -19,23 +46,27 @@ export const Modal_create_anouncement = () => {
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 Marca
                             </label>
-                            <input type="text" placeholder="Chevrolet" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            <input {...register("brand")} type="text" placeholder="Chevrolet" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            {errors.brand && <span className="text-sm text-alert1 mb-6">{errors.brand.message}</span>}
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 Modelo
                             </label>
-                            <input type="text" placeholder="Camaro ss 6.2 v8 16v" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            <input {...register("model")} type="text" placeholder="Camaro ss 6.2 v8 16v" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            {errors.model && <span className="text-sm text-alert1 mb-6">{errors.model.message}</span>}
                             <div className="flex mb-6">
                                 <div className="mr-5">
                                     <label className="text-sm text-grey1 font-medium">
                                         Ano
                                     </label>
-                                    <input type="number" placeholder="2018" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <input {...register("year")} type="number" placeholder="2018" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    {errors.year && <span className="text-sm text-alert1 mb-6">{errors.year.message}</span>}
                                 </div>
                                 <div>
                                     <label className="text-sm text-grey1 font-medium">
                                         Combustível
                                     </label>
-                                    <input type="text" placeholder="Gasolina/Etanol" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <input {...register("fuel")} type="text" placeholder="Gasolina/Etanol" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    {errors.fuel && <span className="text-sm text-alert1 mb-6">{errors.fuel.message}</span>}
                                 </div>
                             </div>
                             <div className="flex mb-6">
@@ -43,13 +74,15 @@ export const Modal_create_anouncement = () => {
                                     <label className="text-sm text-grey1 font-medium">
                                         Quilometragem
                                     </label>
-                                    <input type="number" placeholder="30.000" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <input {...register("mileage")} type="number" placeholder="30.000" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    {errors.mileage && <span className="text-sm text-alert1 mb-6">{errors.mileage.message}</span>}
                                 </div>
                                 <div>
                                     <label className="text-sm text-grey1 font-medium">
                                         Cor
                                     </label>
-                                    <input type="text" placeholder="Branco" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <input {...register("color")} type="text" placeholder="Branco" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    {errors.color && <span className="text-sm text-alert1 mb-6">{errors.color.message}</span>}
                                 </div>
                             </div>
                             <div className="flex mb-6">
@@ -57,46 +90,51 @@ export const Modal_create_anouncement = () => {
                                     <label className="text-sm text-grey1 font-medium">
                                         Preço tabela FIPE
                                     </label>
-                                    <input type="text" placeholder="R$ 48.000,00" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <input {...register("price_fipe")} type="text" placeholder="R$ 48.000,00" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    {errors.price_fipe && <span className="text-sm text-alert1 mb-6">{errors.price_fipe.message}</span>}
                                 </div>
                                 <div>
                                     <label className="text-sm text-grey1 font-medium">
                                         Preço
                                     </label>
-                                    <input type="text" placeholder="R$ 50.000,00" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <input {...register("price")} type="text" placeholder="R$ 50.000,00" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    {errors.price && <span className="text-sm text-alert1 mb-6">{errors.price.message}</span>}
                                 </div>
                             </div>
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 Descrição
                             </label>
-                            <textarea className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6 resize-none">
+                            <textarea {...register("description")} className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6 resize-none">
 
                             </textarea>
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 Imagem da capa
                             </label>
-                            <input type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            <input {...register("cover_image")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            {errors.cover_image && <span className="text-sm text-alert1 mb-6">{errors.cover_image.message}</span>}
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 1° Imagem da galeria
                             </label>
-                            <input type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            <input {...register("images")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            {errors.image_url && <span className="text-sm text-alert1 mb-6">{errors.image_url.message}</span>}
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 2° Imagem da galeria
                             </label>
-                            <input type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            <input {...register("images")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            {errors.image_url && <span className="text-sm text-alert1 mb-6">{errors.image_url.message}</span>}
                             <button type="button" className="w-[70%] py-3 px-5 bg-brand4 text-brand1 text-sm font-medium rounded mb-6">
                                 Adicionar campo para imagem da galeria
                             </button>
                         </fieldset>
+                        <div className="modal-footer flex justify-end">
+                            <button type="button" className="w-[9.6875rem] h-[3rem] bg-grey6 rounded font-semibold text-grey2 mr-[0.3125rem]">
+                                Cancelar
+                            </button>
+                            <button type="submit" className="w-[12.0625rem] h-[3rem] bg-brand1 rounded font-semibold text-whiteFixed">
+                                Criar anúncio
+                            </button>
+                        </div>
                     </form>
-                </div>
-                <div className="modal-footer flex justify-end">
-                    <button type="button" className="w-[9.6875rem] h-[3rem] bg-grey6 rounded font-semibold text-grey2 mr-[0.3125rem]">
-                        Cancelar
-                    </button>
-                    <button type="button" className="w-[12.0625rem] h-[3rem] bg-brand1 rounded font-semibold text-whiteFixed">
-                        Criar anúncio
-                    </button>
                 </div>
             </div>
         </div>

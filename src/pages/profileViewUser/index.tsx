@@ -2,27 +2,31 @@ import { Header_profile } from "../../components/header_profile/header_profile"
 import euuu from "../../assets/euuu.jpeg"
 import { Card_product } from "../../components/card_product/card_product"
 import { Footer } from "../../components/footer/footer"
+import { useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
 
 export const ProfileViewUser = () => {
+    const { user } = useContext(UserContext);
+
     return (
         <>
             <Header_profile>
             </Header_profile>
             <div className="h-full w-full min-h-screen bg-gradient-background-product-2 pt-[4.6875rem]">
                 <section className="rounded bg-grey10 container-page-user py-11 pl-[2.5625rem] pr-[2.5625rem]">
-                    <img src={euuu} className="w-[104px] h-[104px] rounded-[50%] mb-6">
-                    </img>
+                    <div className="w-[104px] h-[104px] flex justify-center items-center bg-brand1 rounded-[50%] mb-6 text-4xl text-whiteFixed font-medium">
+                        {user?.name.charAt(0)}
+                    </div>
                     <div className="mb-5">
                         <span className="text-grey1 font-lexend text-xl font-semibold mr-[0.5625rem]">
-                            Samuel Leão
+                            {user?.name}
                         </span>
                         <span className="py-1 px-2 bg-brand4 text-brand1 text-sm font-medium rounded">
-                            Anunciante
+                            {user?.typeAccount}
                         </span>
                     </div>
                     <p className="text-grey2 text-base font-normal">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                        {user?.description}
                     </p>
                 </section>
                 <section className="container pb-[4.6875rem]">
