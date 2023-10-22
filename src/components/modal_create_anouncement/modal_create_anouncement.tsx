@@ -2,29 +2,50 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { anouncementFormSchema } from "../../schemas/anouncement_schema";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import trash from "../../assets/trash.svg";
 
 export const Modal_create_anouncement = () => {
-
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: zodResolver(anouncementFormSchema)
-    })
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: zodResolver(anouncementFormSchema),
+    });
 
     const submit = (formData: any) => {
-        console.log(formData)
-
         const year = parseFloat(formData.year);
-        formData.year = year
+        formData.year = year;
 
         const mileage = parseFloat(formData.mileage);
-        formData.mileage = mileage
+        formData.mileage = mileage;
 
         const price_fipe = parseFloat(formData.price_fipe);
-        formData.price_fipe = price_fipe
+        formData.price_fipe = price_fipe;
 
         const price = parseFloat(formData.price);
-        formData.price = price
+        formData.price = price;
 
-    }
+        const formDataToSend = {
+            ...formData,
+            images: additionalImages.map((_, index) => formData.images[index]),
+        };
+
+        console.log(formDataToSend);
+    };
+
+    const [additionalImages, setAdditionalImages] = useState<string[]>([]);
+
+    const addImageField = () => {
+        setAdditionalImages([...additionalImages, ""]);
+    };
+
+    const removeImageField = (index: number) => {
+        const updatedImages = [...additionalImages];
+        updatedImages.splice(index, 1);
+        setAdditionalImages(updatedImages);
+    };
 
     return (
         <div className="modal-wrapper w-full h-full bg-modalWrapper fixed top-0 left-0 flex justify-center overflow-auto">
@@ -115,14 +136,38 @@ export const Modal_create_anouncement = () => {
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 1° Imagem da galeria
                             </label>
-                            <input {...register("images")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
-                            {errors.image_url && <span className="text-sm text-alert1 mb-6">{errors.image_url.message}</span>}
+                            <input {...register("image_url_1")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            {errors.image_url_1 && <span className="text-sm text-alert1 mb-6">{errors.image_url_1.message}</span>}
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 2° Imagem da galeria
                             </label>
-                            <input {...register("images")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
-                            {errors.image_url && <span className="text-sm text-alert1 mb-6">{errors.image_url.message}</span>}
-                            <button type="button" className="w-[70%] py-3 px-5 bg-brand4 text-brand1 text-sm font-medium rounded mb-6">
+                            <input {...register("image_url_2")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            {errors.image_url_2 && <span className="text-sm text-alert1 mb-6">{errors.image_url_2.message}</span>}
+                            {additionalImages.map((_image, index) => (
+                                <div key={index}>
+                                    <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">{`${index + 1
+                                        }° Imagem da galeria`}</label>
+                                    <input
+                                        {...register(`images[${index}].url`)}
+                                        type="url"
+                                        placeholder={`https://image.com/${index + 1}`}
+                                        className="w-[90%] border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6 mr-[27px]"
+                                    />
+                                    {index === additionalImages.length - 1 && (
+                                        <button
+                                            type="button"
+                                            onClick={() => removeImageField(index)}
+                                        >
+                                            <img src={trash} className="text-[#4529E6] w-[20px] h-[20px]"></img>
+                                        </button>
+                                    )}
+                                </div>
+                            ))}
+                            <button
+                                type="button"
+                                className="w-[70%] py-3 px-5 bg-brand4 text-brand1 text-sm font-medium rounded mb-6"
+                                onClick={addImageField}
+                            >
                                 Adicionar campo para imagem da galeria
                             </button>
                         </fieldset>
@@ -140,3 +185,14 @@ export const Modal_create_anouncement = () => {
         </div>
     )
 }
+
+
+
+
+
+
+{/* <input {...register("images")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                        {errors.image_url && <span className="text-sm text-alert1 mb-6">{errors.image_url.message}</span>}
+                        <button type="button" className="w-[70%] py-3 px-5 bg-brand4 text-brand1 text-sm font-medium rounded mb-6">
+                            Adicionar campo para imagem da galeria
+                        </button> */}
