@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginFormSchema } from "../../schemas/login_schema";
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserContext";
+import { Link } from "react-router-dom"
 
 export const Login = () => {
     const { userLogin } = useContext(UserContext);
@@ -19,7 +20,7 @@ export const Login = () => {
 
     return (
         <>
-            <Header_home></Header_home>
+            <Header_home />
             <main className="w-full h-screen flex justify-center items-center bg-grey8">
                 <div className="bg-grey10 w-[25.625rem] h-[36.875rem] rounded">
                     <form onSubmit={handleSubmit(submit)} className="w-full h-full py-11 px-12 flex justify-center items-center">
@@ -43,18 +44,17 @@ export const Login = () => {
                             <button type="submit" className="h-[3rem] bg-brand1 rounded font-semibold text-whiteFixed">
                                 Entrar
                             </button>
-                            <span className="my-6 text-sm font-normal text-grey2 self-center">
+                            <Link to="/user" className="my-6 text-sm font-normal text-grey2 self-center">
                                 Ainda não possui conta?
-                            </span>
-                            <button type="button" className="h-[3rem] rounded font-semibold border-[2px] border-grey4 text-grey0">
+                            </Link>
+                            <Link to="/user" type="button" className="h-[3rem] flex justify-center items-center rounded font-semibold border-[2px] border-grey4 text-grey0">
                                 Cadastrar
-                            </button>
+                            </Link>
                         </fieldset>
                     </form>
                 </div>
             </main>
-            <Footer>
-            </Footer>
+            <Footer />
         </>
     )
 }

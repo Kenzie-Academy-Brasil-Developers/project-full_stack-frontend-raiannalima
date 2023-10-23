@@ -15,7 +15,7 @@ export const Header_home = () => {
                     <Link to={"/login"} className="text-grey2 font-semibold mx-5 w-[8.3125rem] h-12 flex items-center justify-center">
                         Fazer Login
                     </Link>
-                    <Link to="/register" className="border-2 border-grey6 rounded w-[8.3125rem] h-12 font-semibold pt-1 flex items-center justify-center color-grey0">
+                    <Link to="/user" className="border-2 border-grey6 rounded w-[8.3125rem] h-12 font-semibold pt-1 flex items-center justify-center color-grey0">
                         Cadastrar
                     </Link>
                 </div>

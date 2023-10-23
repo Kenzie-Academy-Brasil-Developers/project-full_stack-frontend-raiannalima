@@ -31,4 +31,30 @@ npm run dev
 
 ## Conhecendo o projeto - Rotas da API: 
 
-### Rotas de usuário: 
+### -> localhost:porta/: Rota da dashboard; 
+### -> localhost:porta/login : Rota Para o usuário logar; 
+### -> localhost:porta/user : Rota para o usuário se registrar; 
+### -> localhost:porta/product : Rota do carro anunciado; 
+### -> localhost:porta/profile-user : Rota do usuário comprador; 
+### -> localhost:porta/profile-advertiser : Rota do usuário anunciante; 
+
+## Conhecendo o projeto - Principais features:
+
+### /login: 
+
+#### -> Efetuar o login. 
+
+### /user: 
+
+#### -> Efetuar o cadastro. 
+
+### /profile-advertiser: 
+
+#### -> Criar anúncio;
+#### -> Editar an´úncio; 
+
+
+
+
+
+
