@@ -65,6 +65,9 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     const [user, setUser] = useState<IUserLoginReturn | null>(null);
     const navigate = useNavigate();
 
+    const token = localStorage.getItem("@TOKEN");
+    api.defaults.headers.common.authorization = `Bearer ${token}`;
+
     const userLogin = async (
         formData: TLoginFormData,
     ) => {

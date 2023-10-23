@@ -31,6 +31,7 @@ interface IAnouncementContext {
     isModalCreateOpen: boolean;
     openModalCreate: () => void;
     closeModalCreate: () => void;
+    createAnouncement: (formData: TAnouncementFormData) => void;
 }
 
 export const AnouncementContext = createContext({} as IAnouncementContext);
@@ -52,9 +53,11 @@ export const AnouncementProvider = ({
 
     const createAnouncement = async (formData: TAnouncementFormData) => {
         try {
-            const { data } = await api.post("profile-advertiser", formData);
+            const token = localStorage.getItem("@TOKEN");
+            api.defaults.headers.common.authorization = `Bearer ${token}`;
+            const { data } = await api.post("anouncement", formData);
+            console.log(data)
             setAnouncement(data);
-            // navigate("/login");
         } catch (error) {
             const showError = error as AxiosError<AxiosError>;
             console.error(showError);
@@ -68,6 +71,7 @@ export const AnouncementProvider = ({
                 closeModalCreate,
                 openModalCreate,
                 isModalCreateOpen,
+                createAnouncement
             }}
         >
             {children}

@@ -27,7 +27,7 @@ const anouncementFormSchema = z.object({
     cover_image: z.string().nonempty("A imagem é obrigatória."),
     image_url_1: z.string().nonempty("Campo obrigatório.").url("O dado necessita ser uma url."),
     image_url_2: z.string().nonempty("Campo obrigatório.").url("O dado necessita ser uma url."),
-    images: z.object({ url: z.string().url("O dado necessita ser uma url.").optional(), }).array()
+    images: z.object({ image_url: z.string().url("O dado necessita ser uma url.").optional(), }).array()
 })
 
 export type TAnouncementFormData = z.infer<typeof anouncementSchema>;
