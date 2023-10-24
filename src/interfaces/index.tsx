@@ -35,8 +35,8 @@ export interface IAnouncement {
     description?: string | undefined | null;
     cover_image: string;
     user: IUser;
-    images: IImage;
-    comments: IComment;
+    images: IImage[];
+    comments: IComment[];
 }
 
 export interface IAddress {

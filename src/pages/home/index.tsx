@@ -2,8 +2,12 @@ import { Card_product } from "../../components/card_product/card_product"
 import { Footer } from "../../components/footer/footer"
 import { Header_home } from "../../components/header_home/header_home"
 import { StyledContainer, StyledGradient } from "./style"
+import { useContext } from "react";
+import { AnouncementContext } from "../../providers/AnouncementContext";
 
 export const Home = () => {
+    const { anouncements } = useContext(AnouncementContext);
+
     return (
         <>
             <Header_home />
@@ -19,6 +23,12 @@ export const Home = () => {
             </StyledGradient>
             <div className="mt-[4.1875rem] mb-[4.1875rem]">
                 <ul className="container flex flex-wrap gap-12 justify-center items-center">
+                    {
+                        anouncements?.map((anouncement) => (
+                            <Card_product anouncement={anouncement} key={anouncement.brand}></Card_product>
+                        ))
+                    }
+                    {/* <Card_product></Card_product>
                     <Card_product></Card_product>
                     <Card_product></Card_product>
                     <Card_product></Card_product>
@@ -29,16 +39,10 @@ export const Home = () => {
                     <Card_product></Card_product>
                     <Card_product></Card_product>
                     <Card_product></Card_product>
-                    <Card_product></Card_product>
-                    <Card_product></Card_product>
+                    <Card_product></Card_product> */}
                 </ul>
             </div>
             <Footer></Footer>
         </>
     )
 }
-
-
-{/* <div className="w-full h-[544px] flex justify-center items-center">
-<h1> Isso é um teste </h1>
-</div> */}

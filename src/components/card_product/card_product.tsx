@@ -1,9 +1,14 @@
 import { useContext } from "react";
-import { AnouncementContext } from "../../providers/AnouncementContext";
 import { UserContext } from "../../providers/UserContext";
+import { ReactNode } from "react";
+import { IAnouncementId } from "../../providers/AnouncementContext";
 
-export const Card_product = () => {
-    const { anouncement } = useContext(AnouncementContext);
+interface IPropAnouncement {
+    anouncement: IAnouncementId;
+    children?: ReactNode;
+}
+
+export const Card_product = ({ anouncement }: IPropAnouncement) => {
     const { user } = useContext(UserContext);
 
     return (
@@ -12,19 +17,19 @@ export const Card_product = () => {
                 <img src={anouncement?.cover_image} alt="Imagem do carro vinculado ao anúncio." className="max-h-[9.5rem]"></img>
             </div>
             <div className="card-product-info_car mb-4">
-                <h2 className="title-01 mb-4 font-lexend text-base text-grey1 font-semibold">
+                <h2 className="max-h-[1.875rem] overflow-y-scroll title-01 mb-4 font-lexend text-base text-grey1 font-semibold">
                     {anouncement?.brand}
                 </h2>
-                <p className="font-normal text-grey2 text-sm">
+                <p className="max-h-[5rem] overflow-y-scroll font-normal text-grey2 text-sm">
                     {anouncement?.description}
                 </p>
             </div>
             <div className="card-product-info_user mb-4 flex items-center">
                 <div className="w-[32px] h-[32px] flex justify-center items-center bg-brand1 rounded-[50%] mb-6 mr-[0.5rem] text-4xl text-whiteFixed font-medium">
-                    {user?.name.charAt(0)}
+                    {anouncement?.user.name.charAt(0)}
                 </div>
                 <span className="text-sm text-grey2 font-normal">
-                    {user?.name}
+                    {anouncement?.user.name}
                 </span>
             </div>
             <div className="card-product-info_car_data flex justify-between">

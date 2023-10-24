@@ -3,9 +3,11 @@ import { Card_product } from "../../components/card_product/card_product"
 import { Footer } from "../../components/footer/footer"
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserContext";
+import { AnouncementContext } from "../../providers/AnouncementContext";
 
 export const ProfileViewUser = () => {
     const { user } = useContext(UserContext);
+    const { anouncements } = useContext(AnouncementContext);
 
     return (
         <>
@@ -32,12 +34,11 @@ export const ProfileViewUser = () => {
                         Anúncios
                     </h3>
                     <ul className="flex flex-wrap gap-12 justify-center items-center">
-                        <Card_product />
-                        <Card_product />
-                        <Card_product />
-                        <Card_product />
-                        <Card_product />
-                        <Card_product />
+                        {
+                            anouncements?.map((anouncement) => (
+                                <Card_product anouncement={anouncement} key={anouncement.brand}></Card_product>
+                            ))
+                        }
                     </ul>
                 </section>
                 <Footer />

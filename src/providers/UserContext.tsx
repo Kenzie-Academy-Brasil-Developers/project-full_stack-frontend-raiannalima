@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import { AxiosError } from "axios";
@@ -68,12 +68,38 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     const token = localStorage.getItem("@TOKEN");
     api.defaults.headers.common.authorization = `Bearer ${token}`;
 
+    useEffect(() => {
+        const token = localStorage.getItem("@TOKEN");
+        const userId = localStorage.getItem("@USERID");
+
+        const userAutoLogin = async () => {
+            try {
+                const { data } = await api.get<IUserLoginResponse>(`/user/${userId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                setUser(data);
+                // navigate('/home');
+            } catch (error) {
+                console.log(error);
+                localStorage.removeItem("@TOKEN");
+                localStorage.removeItem("@USERID");
+            }
+        }
+
+        if (token && userId) {
+            userAutoLogin();
+        }
+    }, [])
+
     const userLogin = async (
         formData: TLoginFormData,
     ) => {
         try {
             const { data } = await api.post<IUserLoginResponse>("login", formData);
             localStorage.setItem("@TOKEN", data.token);
+            localStorage.setItem("@USERID", JSON.stringify(data.id));
             const { name, description, typeAccount, id } = data;
             const newUser = {
                 name: name,

@@ -2,8 +2,9 @@ import { Link } from "react-router-dom"
 import { useContext, useState } from "react";
 import { UserContext } from "../../providers/UserContext";
 
-export const Header_profile = () => {
+export const Header_profile_advertiser = () => {
     const { user, userLogout } = useContext(UserContext);
+
     const [isModalOptionsUser, setIsModalOptionsUser] = useState(false);
 
     const toggleModalOptionsUser = () => {
