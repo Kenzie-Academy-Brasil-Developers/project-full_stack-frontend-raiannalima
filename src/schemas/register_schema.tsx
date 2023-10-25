@@ -47,6 +47,15 @@ const registerFormSchema = z.object({
     path: ["confirm"]
 })
 
+const editFormSchema = z.object({
+    name: z.string().max(50).nonempty("O nome é obrigatório."),
+    email: z.string().nonempty("O e-mail é obrigatório.").email("Forneça um e-mail válido."),
+    cpf: z.string().min(11, "O cpf deve ter no mínimo 11 digítos.").max(11, "O cpf deve ter no máximo 11 dígitos.").nonempty("O cpf é obrigatório."),
+    tel: z.string().min(10, "O telefone deve conter no mínimo 10 digítos.").max(12, "O telefone deve contar no máximo 12 dígitos."),
+    birth: z.string().nonempty("A data de nascimento é obrigatória."),
+    description: z.string().max(300)
+})
+
 export type TRegisterFormData = z.infer<typeof registerSchema>;
 
-export { registerSchema, registerFormSchema }
+export { registerSchema, registerFormSchema, editFormSchema }

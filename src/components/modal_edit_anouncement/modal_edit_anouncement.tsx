@@ -8,7 +8,9 @@ import { anouncementFormSchema } from "../../schemas/anouncement_schema";
 import trash from "../../assets/trash.svg";
 
 export const Modal_edit_anouncement = () => {
-    const { closeModalEdit, removeAnouncement, currentAnouncement } = useContext(AnouncementContext);
+    const { closeModalEdit, removeAnouncement, currentAnouncement, editAnouncement } =
+        useContext(AnouncementContext);
+    const [published, setPublished] = useState(true);
 
     const {
         register,
@@ -22,6 +24,7 @@ export const Modal_edit_anouncement = () => {
     const { fields, append, remove } = useFieldArray({ control, name: "images" });
 
     const submit = (formData: any) => {
+        console.log(published);
         const year = parseFloat(formData.year);
         formData.year = year;
 
@@ -38,21 +41,24 @@ export const Modal_edit_anouncement = () => {
 
         let newImages = [image_url_1, image_url_2];
 
-        const pickImages = images?.map((image) => {
-            return image.image_url!
-        }) || null
+        const pickImages =
+            images?.map((image) => {
+                return image.image_url!;
+            }) || null;
 
         if (pickImages) {
-            newImages = [...newImages, ...pickImages]
+            newImages = [...newImages, ...pickImages];
         }
 
         const arrayFinalImages = newImages.map((image) => {
-            return { image_url: image }
-        })
+            return { image_url: image };
+        });
 
-        const formDataFinal = { ...rest, images: arrayFinalImages }
+        const formDataFinal = { ...rest, images: arrayFinalImages };
+        console.log(formDataFinal);
+        // createAnouncement(formDataFinal);
 
-        createAnouncement(formDataFinal);
+        editAnouncement(currentAnouncement!.id, formDataFinal)
     };
 
     const [additionalImages, setAdditionalImages] = useState<string[]>([]);
@@ -74,12 +80,16 @@ export const Modal_edit_anouncement = () => {
                     <h2 className="font-lexend text-grey1 text-base font-medium">
                         Editar anúncio
                     </h2>
-                    <button onClick={closeModalEdit} type="button" className="text-[25px] font-lexend text-grey4">
+                    <button
+                        onClick={closeModalEdit}
+                        type="button"
+                        className="text-[25px] font-lexend text-grey4"
+                    >
                         x
                     </button>
                 </div>
                 <div className="modal-main">
-                    <form>
+                    <form onSubmit={handleSubmit(submit)}>
                         <fieldset className="flex flex-col">
                             <legend className="text-sm text-[#000] font-medium mb-6">
                                 Informações do veículo
@@ -87,23 +97,41 @@ export const Modal_edit_anouncement = () => {
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 Marca
                             </label>
-                            <input {...register("brand")} type="text" placeholder="Chevrolet" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            <input
+                                {...register("brand")}
+                                type="text"
+                                placeholder="Chevrolet"
+                                className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"
+                            ></input>
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 Modelo
                             </label>
-                            <input {...register("model")} type="text" placeholder="Camaro ss 6.2 v8 16v" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            <input
+                                {...register("model")}
+                                type="text"
+                                placeholder="Camaro ss 6.2 v8 16v"
+                                className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"
+                            ></input>
                             <div className="flex mb-6">
                                 <div className="mr-5">
-                                    <label className="text-sm text-grey1 font-medium">
-                                        Ano
-                                    </label>
-                                    <input {...register("year")} type="number" placeholder="2018" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <label className="text-sm text-grey1 font-medium">Ano</label>
+                                    <input
+                                        {...register("year")}
+                                        type="number"
+                                        placeholder="2018"
+                                        className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
+                                    ></input>
                                 </div>
                                 <div>
                                     <label className="text-sm text-grey1 font-medium">
                                         Combustível
                                     </label>
-                                    <input {...register("fuel")} type="text" placeholder="Gasolina/Etanol" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <input
+                                        {...register("fuel")}
+                                        type="text"
+                                        placeholder="Gasolina/Etanol"
+                                        className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
+                                    ></input>
                                 </div>
                             </div>
                             <div className="flex mb-6">
@@ -111,13 +139,21 @@ export const Modal_edit_anouncement = () => {
                                     <label className="text-sm text-grey1 font-medium">
                                         Quilometragem
                                     </label>
-                                    <input {...register("mileage")} type="number" placeholder="30.000" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <input
+                                        {...register("mileage")}
+                                        type="number"
+                                        placeholder="30.000"
+                                        className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
+                                    ></input>
                                 </div>
                                 <div>
-                                    <label className="text-sm text-grey1 font-medium">
-                                        Cor
-                                    </label>
-                                    <input {...register("color")} type="text" placeholder="Branco" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <label className="text-sm text-grey1 font-medium">Cor</label>
+                                    <input
+                                        {...register("color")}
+                                        type="text"
+                                        placeholder="Branco"
+                                        className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
+                                    ></input>
                                 </div>
                             </div>
                             <div className="flex mb-6">
@@ -125,30 +161,59 @@ export const Modal_edit_anouncement = () => {
                                     <label className="text-sm text-grey1 font-medium">
                                         Preço tabela FIPE
                                     </label>
-                                    <input {...register("price_fipe")} type="text" placeholder="R$ 48.000,00" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <input
+                                        {...register("price_fipe")}
+                                        type="text"
+                                        placeholder="R$ 48.000,00"
+                                        className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
+                                    ></input>
                                 </div>
                                 <div>
                                     <label className="text-sm text-grey1 font-medium">
                                         Preço
                                     </label>
-                                    <input {...register("price")} type="text" placeholder="R$ 50.000,00" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"></input>
+                                    <input
+                                        {...register("price")}
+                                        type="text"
+                                        placeholder="R$ 50.000,00"
+                                        className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
+                                    ></input>
                                 </div>
                             </div>
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 Descrição
                             </label>
-                            <textarea {...register("description")} className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6 resize-none">
-
-                            </textarea>
+                            <textarea
+                                {...register("description")}
+                                className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6 resize-none"
+                            ></textarea>
                             <div className="mb-6">
                                 <label className="text-sm text-grey1 font-medium">
                                     Publicado
                                 </label>
                                 <div className="flex mt-[0.3125rem]">
-                                    <button type="button" className="w-[50%] h-[3rem] rounded font-semibold border-2 border-grey4 text-grey0 mr-[0.3125rem]">
+                                    <button
+                                        type="button"
+                                        // className="w-[50%] h-[3rem] rounded font-semibold border-2 border-grey4 text-grey0 mr-[0.3125rem]"
+                                        className={
+                                            published!
+                                                ? "h-[3rem] w-[49%] bg-brand1 rounded font-semibold text-whiteFixed mr-1"
+                                                : "h-[3rem] w-[49%] rounded font-semibold border-[2px] border-grey4 text-grey0"
+                                        }
+                                        onClick={() => setPublished(true)}
+                                    >
                                         Sim
                                     </button>
-                                    <button type="button" className="w-[50%] h-[3rem] bg-brand1 rounded font-semibold text-whiteFixed">
+                                    <button
+                                        type="button"
+                                        // className="w-[50%] h-[3rem] bg-brand1 rounded font-semibold text-whiteFixed"
+                                        className={
+                                            published
+                                                ? "h-[3rem] w-[49%] rounded font-semibold border-[2px] border-grey4 text-grey0"
+                                                : "h-[3rem] w-[49%] bg-brand1 rounded font-semibold text-whiteFixed mr-1"
+                                        }
+                                        onClick={() => setPublished(false)}
+                                    >
                                         Não
                                     </button>
                                 </div>
@@ -156,15 +221,30 @@ export const Modal_edit_anouncement = () => {
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 Imagem da capa
                             </label>
-                            <input {...register("cover_image")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            <input
+                                {...register("cover_image")}
+                                type="url"
+                                placeholder="https://image.com"
+                                className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"
+                            ></input>
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 1° Imagem da galeria
                             </label>
-                            <input {...register("image_url_1")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            <input
+                                {...register("image_url_1")}
+                                type="url"
+                                placeholder="https://image.com"
+                                className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"
+                            ></input>
                             <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">
                                 2° Imagem da galeria
                             </label>
-                            <input {...register("image_url_2")} type="url" placeholder="https://image.com" className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"></input>
+                            <input
+                                {...register("image_url_2")}
+                                type="url"
+                                placeholder="https://image.com"
+                                className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"
+                            ></input>
                             {fields.map((_image, index) => (
                                 <div key={index}>
                                     <label className="text-sm text-grey1 font-medium mb-[0.3125rem]">{`${index + 3
@@ -176,10 +256,7 @@ export const Modal_edit_anouncement = () => {
                                         className="w-[90%] border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6 mr-[27px]"
                                     />
                                     {index === fields.length - 1 && (
-                                        <button
-                                            type="button"
-                                            onClick={() => remove(index)}
-                                        >
+                                        <button type="button" onClick={() => remove(index)}>
                                             <img
                                                 src={trash}
                                                 className="text-[#4529E6] w-[20px] h-[20px]"
@@ -197,13 +274,24 @@ export const Modal_edit_anouncement = () => {
                             </button>
                         </fieldset>
                         <div className="modal-footer flex justify-end">
-                            <button type="button" className="w-[9.375rem] h-[3rem] bg-grey6 rounded font-semibold text-grey2 mr-[0.3125rem]">
+                            <button
+                                type="button"
+                                className="w-[9.375rem] h-[3rem] bg-grey6 rounded font-semibold text-grey2 mr-[0.3125rem]"
+                                onClick={closeModalEdit}
+                            >
                                 Cancelar
                             </button>
-                            <button onClick={() => removeAnouncement(currentAnouncement!.id)} type="button" className="w-[9.375rem] h-[3rem] bg-alert2 rounded font-semibold text-alert1 mr-[0.3125rem]">
+                            <button
+                                onClick={() => removeAnouncement(currentAnouncement!.id)}
+                                type="button"
+                                className="w-[9.375rem] h-[3rem] bg-alert2 rounded font-semibold text-alert1 mr-[0.3125rem]"
+                            >
                                 Excluir anúncio
                             </button>
-                            <button type="button" className="w-[9.375rem] h-[3rem] bg-brand1 rounded font-semibold text-whiteFixed">
+                            <button
+                                type="submit"
+                                className="w-[9.375rem] h-[3rem] bg-brand1 rounded font-semibold text-whiteFixed"
+                            >
                                 Salvar alterações
                             </button>
                         </div>
@@ -211,9 +299,5 @@ export const Modal_edit_anouncement = () => {
                 </div>
             </div>
         </div>
-    )
-}
-
-
-// Quando clicar no botão de abrir o modal, setar um estado do anúncio atual;
-// Usar este estado no componente do modal de edição. 
+    );
+};

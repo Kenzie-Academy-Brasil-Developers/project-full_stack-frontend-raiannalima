@@ -301,6 +301,7 @@ export const Modal_create_anouncement = (title: any) => {
                         </fieldset>
                         <div className="modal-footer flex justify-end">
                             <button
+                                onClick={closeModalCreate}
                                 type="button"
                                 className="w-[9.6875rem] h-[3rem] bg-grey6 rounded font-semibold text-grey2 mr-[0.3125rem]"
                             >

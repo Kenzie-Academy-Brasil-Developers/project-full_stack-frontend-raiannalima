@@ -53,11 +53,16 @@ interface IAnouncementContext {
     closeModalCreate: () => void;
     openModalEdit: () => void;
     closeModalEdit: () => void;
+    openModalDelete: () => void;
+    closeModalDelete: () => void;
     createAnouncement: (formData: TAnouncementFormData) => void;
     getAnouncements: () => void;
     removeAnouncement: (anouncementId: number) => void;
     currentAnouncement: IAnouncementId | null;
     setCurrentAnouncement: React.Dispatch<React.SetStateAction<IAnouncementId | null>>
+    editAnouncement: (anouncementId: number, formData: TAnouncementFormData) => void;
+    anouncementsAdvertiser: IAnouncementId[] | null;
+    isModalDeleteOpen: boolean;
 }
 
 export const AnouncementContext = createContext({} as IAnouncementContext);
@@ -69,12 +74,19 @@ export const AnouncementProvider = ({
     const [anouncements, setAnouncements] = useState<IAnouncementId[]>([]);
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
     const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
     const [currentAnouncement, setCurrentAnouncement] = useState<IAnouncementId | null>(null)
+    const [anouncementsAdvertiser, setAnouncementsAdvertiser] = useState<IAnouncementId[] | null>(null);
 
     const navigate = useNavigate();
+    const idUser = localStorage.getItem("@USERID");
 
     useEffect(() => {
         getAnouncements()
+    }, [anouncement])
+
+    useEffect(() => {
+        getAnouncementsAdvertiser(idUser)
     }, [anouncement])
 
     const closeModalCreate = () => {
@@ -92,6 +104,14 @@ export const AnouncementProvider = ({
     const openModalEdit = () => {
         setIsModalEditOpen(true);
     }
+
+    const closeModalDelete = () => {
+        setIsModalDeleteOpen(false);
+    };
+
+    const openModalDelete = () => {
+        setIsModalDeleteOpen(true);
+    };
 
     const createAnouncement = async (formData: TAnouncementFormData) => {
         try {
@@ -117,6 +137,25 @@ export const AnouncementProvider = ({
         }
     }
 
+    const editAnouncement = async (anouncementId: number, formData: TAnouncementFormData) => {
+        const token = localStorage.getItem("@TOKEN");
+        api.defaults.headers.common.authorization = `Bearer ${token}`;
+        const { data } = await api.patch(`anouncement/${anouncementId}`, formData);
+        setAnouncement(data)
+        closeModalEdit()
+    }
+
+    const getAnouncementsAdvertiser = async (userId: string) => {
+        try {
+            const allAnouncementsAdvertiser = await api.get(`anouncement/advertiser/${userId}`);
+            setAnouncementsAdvertiser(allAnouncementsAdvertiser.data);
+        } catch (error) {
+            const showError = error as AxiosError<AxiosError>;
+            console.error(showError);
+        }
+    }
+
+
     const removeAnouncement = async (anouncementId: number) => {
         const token = localStorage.getItem("@TOKEN");
 
@@ -129,6 +168,8 @@ export const AnouncementProvider = ({
 
             const newAnouncementsList = anouncements!.filter(currentAnouncement => currentAnouncement.id !== anouncementId);
             setAnouncements(newAnouncementsList)
+            closeModalEdit()
+            window.location.reload()
         } catch (error) {
             console.log(error);
         }
@@ -149,10 +190,17 @@ export const AnouncementProvider = ({
                 isModalEditOpen,
                 removeAnouncement,
                 currentAnouncement,
-                setCurrentAnouncement
+                setCurrentAnouncement,
+                editAnouncement,
+                anouncementsAdvertiser,
+                closeModalDelete,
+                openModalDelete
             }}
         >
             {children}
         </AnouncementContext.Provider>
     );
 };
+
+// fazer um get;
+// armazenar em um estado 

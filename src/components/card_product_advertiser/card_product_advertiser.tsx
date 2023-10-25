@@ -13,7 +13,7 @@ export const Card_product_advertiser = ({ anouncement }: IPropAnouncement) => {
     const { openModalEdit, setCurrentAnouncement } = useContext(AnouncementContext);
 
     return (
-        <li className="w-[16rem] h-[25.875rem]">
+        <li className="w-[16rem] h-[28.875rem] overflow-y-scroll">
             <div className="flex justify-center items-center card-product-img bg-grey7 h-[9.5rem] mb-4">
                 <img src={anouncement?.cover_image} alt="Imagem do carro vinculado ao anúncio." className="max-h-[9.5rem]"></img>
             </div>
@@ -21,7 +21,7 @@ export const Card_product_advertiser = ({ anouncement }: IPropAnouncement) => {
                 <h2 className="max-h-[1.875rem] overflow-y-scroll title-01 mb-4 font-lexend text-base text-grey1 font-semibold">
                     {anouncement?.brand}
                 </h2>
-                <p className="max-h-[5rem] overflow-y-scroll font-normal text-grey2 text-sm">
+                <p className="max-h-[5rem] min-h-[5rem] overflow-y-scroll font-normal text-grey2 text-sm">
                     {anouncement?.description}
                 </p>
             </div>

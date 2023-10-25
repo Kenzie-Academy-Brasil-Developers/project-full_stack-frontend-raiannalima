@@ -6,10 +6,11 @@ import { UserContext } from "../../providers/UserContext";
 import { AnouncementContext } from "../../providers/AnouncementContext";
 import { Modal_edit_anouncement } from "../../components/modal_edit_anouncement/modal_edit_anouncement";
 import { Header_profile_advertiser } from "../../components/header_profile_advertiser/header_profile_advertiser";
+import { Modal_edit_perfil } from "../../components/modal_edit_perfil/modal_edit_perfil";
 
 export const ProfileViewAdmin = () => {
-    const { user } = useContext(UserContext);
-    const { anouncements } = useContext(AnouncementContext);
+    const { user, isModalEditUserOpen } = useContext(UserContext);
+    const { anouncementsAdvertiser } = useContext(AnouncementContext);
 
     const { isModalCreateOpen, openModalCreate } = useContext(AnouncementContext);
     const { isModalEditOpen } = useContext(AnouncementContext);
@@ -17,10 +18,13 @@ export const ProfileViewAdmin = () => {
     return (
         <>
             {isModalEditOpen ? (
-                <Modal_edit_anouncement title={"Editar Anuncio"} />
+                <Modal_edit_anouncement title={"Editar Anúncio."} />
             ) : null}
             {isModalCreateOpen ? (
-                <Modal_create_anouncement title={"Criar Anuncio"} />
+                <Modal_create_anouncement title={"Criar Anúncio."} />
+            ) : null}
+            {isModalEditUserOpen ? (
+                <Modal_edit_perfil title={"Editar perfil."} />
             ) : null}
             <Header_profile_advertiser />
             <div className="h-full w-full min-h-screen bg-gradient-background-product-2 pt-[4.6875rem]">
@@ -49,10 +53,12 @@ export const ProfileViewAdmin = () => {
                     </h3>
                     <ul className="flex flex-wrap gap-12 justify-center items-center">
                         {
-                            anouncements?.map((anouncement) => (
+                            anouncementsAdvertiser &&
+                            anouncementsAdvertiser?.map((anouncement) => (
                                 <Card_product_advertiser anouncement={anouncement} key={anouncement.id}></Card_product_advertiser>
                             ))
                         }
+
                         {/* <Card_product_advertiser></Card_product_advertiser>
                         <Card_product_advertiser></Card_product_advertiser>
                         <Card_product_advertiser></Card_product_advertiser>

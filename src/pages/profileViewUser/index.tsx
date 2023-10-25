@@ -4,13 +4,17 @@ import { Footer } from "../../components/footer/footer"
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserContext";
 import { AnouncementContext } from "../../providers/AnouncementContext";
+import { Modal_edit_perfil } from "../../components/modal_edit_perfil/modal_edit_perfil";
 
 export const ProfileViewUser = () => {
-    const { user } = useContext(UserContext);
+    const { user, isModalEditUserOpen } = useContext(UserContext);
     const { anouncements } = useContext(AnouncementContext);
 
     return (
         <>
+            {isModalEditUserOpen ? (
+                <Modal_edit_perfil title={"Editar perfil."} />
+            ) : null}
             <Header_profile />
             <div className="h-full w-full min-h-screen bg-gradient-background-product-2 pt-[4.6875rem]">
                 <section className="rounded bg-grey10 container-page-user py-11 pl-[2.5625rem] pr-[2.5625rem]">

@@ -19,6 +19,12 @@ interface IUserContext {
         formData: TRegisterFormData
     ) => Promise<void>;
     userLogout: () => void;
+    isModalEditUserOpen: boolean;
+    openModalEditUser: () => void;
+    closeModalEditUser: () => void;
+    userEdit: (formData: TRegisterFormData) => void;
+    isModalRegisterOpen: boolean;
+    closeModalRegisterSucess: () => void;
 }
 
 interface IUser {
@@ -64,6 +70,24 @@ export const UserContext = createContext({} as IUserContext);
 export const UserProvider = ({ children }: IUserProviderProps) => {
     const [user, setUser] = useState<IUserLoginReturn | null>(null);
     const navigate = useNavigate();
+    const [isModalEditUserOpen, setIsModalEditUserOpen] = useState(false);
+    const [isModalRegisterOpen, setIsModalRegisterOpen] = useState(false);
+
+    const closeModalEditUser = () => {
+        setIsModalEditUserOpen(false);
+    }
+
+    const openModalEditUser = () => {
+        setIsModalEditUserOpen(true);
+    }
+
+    const closeModalRegisterSucess = () => {
+        setIsModalRegisterOpen(false);
+    }
+
+    const openModalRegisterSucess = () => {
+        setIsModalRegisterOpen(true);
+    }
 
     const token = localStorage.getItem("@TOKEN");
     api.defaults.headers.common.authorization = `Bearer ${token}`;
@@ -127,14 +151,25 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     ) => {
         try {
             const { data } = await api.post<IUser>("user", formData);
+            openModalRegisterSucess()
             // setUser(data);
-            navigate("/login");
+            // navigate("/login");
 
         } catch (error) {
             const showError = error as AxiosError<IAxiosErro>
             console.error(showError)
         }
     };
+
+    const userEdit = async (formData: TRegisterFormData) => {
+        const token = localStorage.getItem("@TOKEN");
+        const id = localStorage.getItem("@USERID");
+
+        api.defaults.headers.common.authorization = `Bearer ${token}`;
+        const { data } = await api.patch(`user/${id}`, formData);
+        setUser({ ...user, ...data })
+        closeModalEditUser()
+    }
 
     const userLogout = () => {
         localStorage.removeItem("@TOKEN");
@@ -144,8 +179,22 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     };
 
     return (
-        <UserContext.Provider value={{ user, userLogin, userRegister, userLogout }}>
+        <UserContext.Provider value={{
+            user,
+            userLogin,
+            userRegister,
+            userLogout,
+            closeModalEditUser,
+            openModalEditUser,
+            isModalEditUserOpen,
+            userEdit,
+            isModalRegisterOpen,
+            closeModalRegisterSucess
+        }}>
             {children}
         </UserContext.Provider>
     );
 };
+
+
+// criar um estado para os modais e setar true quando a requisição for chamada. 

@@ -13,8 +13,9 @@ export default {
         "car-homepage": "url('./src/assets/car.png')",
         "gradient-background-homepage": "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(204,208,209,1) 100%)",
         "gradient-background-product": "linear-gradient(180deg, #4529E6 31.25%, #F1F3F5 31.26%, #F1F3F5 100%)",
-        "gradient-background-product-2": "linear-gradient(180deg, #4529E6 6.25%, #F1F3F5 4.26%, #F1F3F5 100%)",
+        "gradient-background-product-2": "linear-gradient(180deg, #4529E6 21.25%, #F1F3F5 4.26%, #F1F3F5 100%)",
       },
+
       colors: {
         brand1: "#4529E6",
         brand2: "#5126EA",

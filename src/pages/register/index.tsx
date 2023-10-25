@@ -7,9 +7,10 @@ import { registerFormSchema } from "../../schemas/register_schema";
 import { useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserContext";
+import { Modal_register_sucess } from "../../components/modal_register_sucess/modal_register_sucess";
 
 export const Register = () => {
-    const { userRegister } = useContext(UserContext);
+    const { userRegister, isModalRegisterOpen } = useContext(UserContext);
     const [advertiser, setAdvertiser] = useState(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -31,6 +32,9 @@ export const Register = () => {
 
     return (
         <>
+            {isModalRegisterOpen ? (
+                <Modal_register_sucess title={"Registro feito com sucesso!"} />
+            ) : null}
             <Header_home />
             <main className="w-full flex justify-center items-center bg-grey8">
                 <div className="bg-grey10 w-[34.625rem] rounded mt-[2.875rem] mb-[2.875rem]">
