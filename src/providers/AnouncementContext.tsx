@@ -47,7 +47,11 @@ interface IImage {
 interface IComment {
     id: number;
     comment: string;
+    user: IUser;
+    anouncement: IAnouncementId;
 }
+
+// MEXI NA ICOMMENT ADICIONANDO O USER E O ANOUNCEMENT. ANTES NÃO TINHA ESSES DADOS. 
 
 interface IAnouncementContext {
     anouncement: IAnouncement | IAnouncementId | null;
@@ -70,8 +74,9 @@ interface IAnouncementContext {
     isModalDeleteOpen: boolean;
     getAnouncementsAdvertiser: (userId: string) => void;
     anouncementById: IAnouncementId | null;
-    getAnouncementById: (anouncementId: number) => void;
-    getCommentsByIdAnouncement: (anouncementId: number) => void;
+    getAnouncementById: (anouncementId: string) => void;
+    getCommentsByIdAnouncement: (anouncementId: string) => void;
+    comments: IComment[] | [];
 }
 
 export const AnouncementContext = createContext({} as IAnouncementContext);
@@ -162,7 +167,7 @@ export const AnouncementProvider = ({
         }
     }
 
-    const getAnouncementById = async (anouncementId: number) => {
+    const getAnouncementById = async (anouncementId: string) => {
         try {
             const anouncement = await api.get(`anouncement/${anouncementId}`);
             console.log(anouncement)
@@ -195,7 +200,7 @@ export const AnouncementProvider = ({
 
     /* Comments */
 
-    const getCommentsByIdAnouncement = async (anouncementId: number) => {
+    const getCommentsByIdAnouncement = async (anouncementId: string) => {
         try {
             const allComments = await api.get(`comment/${anouncementId}`);
             setComments(allComments.data)
@@ -229,7 +234,8 @@ export const AnouncementProvider = ({
                 getAnouncementById,
                 isModalDeleteOpen,
                 anouncementById,
-                getCommentsByIdAnouncement
+                getCommentsByIdAnouncement,
+                comments
             }}
         >
             {children}

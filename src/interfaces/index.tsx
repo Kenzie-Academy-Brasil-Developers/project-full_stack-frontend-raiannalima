@@ -1,3 +1,5 @@
+import { IAnouncementId } from "../providers/AnouncementContext";
+
 export interface IUser {
     id: number;
     name: string;
@@ -7,6 +9,7 @@ export interface IUser {
     birth: string;
     password: string;
     typeAccount: 'Comprador' | 'Anunciante';
+    description: string | null;
     anouncements: IAnouncement;
     address: IAddress;
 }
@@ -20,6 +23,7 @@ export interface IComment {
     id: number;
     comment: string;
     user: IUser;
+    anouncement: IAnouncementId;
 }
 
 export interface IAnouncement {

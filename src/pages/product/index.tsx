@@ -1,22 +1,32 @@
 import { Header_profile } from "../../components/header_profile/header_profile";
-import avatar from "../../assets/avatar.png";
 import { Card_comment } from "../../components/card_comment/card_comment";
 import { Footer } from "../../components/footer/footer";
 import { Link, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../providers/UserContext";
 import { AnouncementContext } from "../../providers/AnouncementContext";
+import { Header_profile_advertiser } from "../../components/header_profile_advertiser/header_profile_advertiser";
+import { Header_home } from "../../components/header_home/header_home";
 
 export const Product = () => {
     const { user } = useContext(UserContext);
-    const { anouncementById } = useContext(AnouncementContext);
-    // const [reduceName, setReduceName] = useState("");
-    // const { id } = useParams();
-    console.log(anouncementById);
+    const { anouncementById, comments, getAnouncementById, getCommentsByIdAnouncement } = useContext(AnouncementContext);
+
+    const { id } = useParams()
+
+    useEffect(() => {
+        getAnouncementById(id!)
+    }, [])
+
+    useEffect(() => {
+        getCommentsByIdAnouncement(id!)
+    }, [])
 
     return (
         <>
-            <Header_profile></Header_profile>
+            {
+                user?.typeAccount === 'Comprador' ? <Header_profile /> : user?.typeAccount === 'Anunciante' ? <Header_profile_advertiser /> : <Header_home />
+            }
             <div className="h-full w-full min-h-screen bg-gradient-background-product">
                 <section className="flex container">
                     <main className="w-[90%] mr-[2.875rem]">
@@ -54,7 +64,7 @@ export const Product = () => {
                             <h3 className="text-grey1 font-lexend text-xl font-semibold mb-8">
                                 Descrição
                             </h3>
-                            <p className="text-grey2 text-base font-normal max-h-[18.75rem] overflow-y-scroll">
+                            <p className="max-h-[18.75rem] text-grey2 text-base font-normal max-h-[18.75rem] overflow-y-scroll">
                                 {anouncementById?.description}
                             </p>
                         </div>
@@ -63,7 +73,7 @@ export const Product = () => {
                                 Comentários
                             </h3>
                             <ul className="flex flex-col gap-11">
-                                {anouncementById?.comments.map((comment) => (
+                                {comments && comments.map((comment) => (
                                     <Card_comment key={comment.id} comment={comment} />
                                 ))}
                             </ul>
@@ -77,13 +87,15 @@ export const Product = () => {
                                     {user?.name}
                                 </span>
                             </div>
-                            <textarea className="w-full min-h-[8rem] border-[2px] border-grey7 relative"></textarea>
-                            <button
-                                type="button"
-                                className="absolute h-[2.375rem] py-3 px-5 flex justify-center items-center bg-brand1 rounded font-semibold text-whiteFixed right-[66px] bottom-[51px]"
-                            >
-                                Comentar
-                            </button>
+                            <form>
+                                <textarea className="w-full min-h-[8rem] border-[2px] border-grey7 relative"></textarea>
+                                <button
+                                    type="button"
+                                    className="absolute h-[2.375rem] py-3 px-5 flex justify-center items-center bg-brand1 rounded font-semibold text-whiteFixed right-[66px] bottom-[51px]"
+                                >
+                                    Comentar
+                                </button>
+                            </form>
                         </div>
                     </main>
                     <aside className="w-[90%]">
@@ -94,14 +106,14 @@ export const Product = () => {
                             <div className="flex flex-wrap justify-center items-center gap-x-2.5 gap-y-4 max-h-[37.5rem] overflow-y-scroll">
                                 {anouncementById?.images.map((image) => (
                                     <div className="w-[6.75rem] h-[6.75rem] bg-grey7 flex justify-center items-center p-1.5 rounded">
-                                        <img src={image}></img>
+                                        <img src={image.image_url}></img>
                                     </div>
                                 ))}
                             </div>
                         </div>
                         <div className="w-full bg-grey10 mt-[2.5rem] py-7 px-11 rounded flex justify-center items-center flex-col">
                             <div className="flex gap-2 items-center">
-                                <div className="w-[104px] h-[104px] flex justify-center items-center bg-brand1 rounded-[50%] text-sm text-whiteFixed font-medium">
+                                <div className="w-[104px] h-[104px] flex justify-center items-center bg-brand1 rounded-[50%] text-sm text-whiteFixed font-medium mb-[1.75rem]">
                                     {user?.name.charAt(0)}
                                 </div>
                                 {/* <p className="bg-brand1 rounded-full w-10 h-10 text-center pt-1 text-whiteFixed font-medium ">
@@ -111,8 +123,8 @@ export const Product = () => {
                             <span className="text-grey1 font-lexend text-xl font-semibold">
                                 {anouncementById?.user.name}
                             </span>
-                            <p className="my-8 text-grey2 grey2 font-normal">
-                                {anouncementById?.user.name}
+                            <p className="my-8 text-grey2 grey2 font-normal max-h-[18.75rem]">
+                                {anouncementById?.user.description}
                             </p>
                             <Link
                                 type="button"
@@ -129,3 +141,7 @@ export const Product = () => {
         </>
     );
 };
+
+function getCommentsByIdAnouncement(arg0: boolean) {
+    throw new Error("Function not implemented.");
+}

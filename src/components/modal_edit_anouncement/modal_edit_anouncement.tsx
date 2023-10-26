@@ -99,6 +99,7 @@ export const Modal_edit_anouncement = () => {
                             </label>
                             <input
                                 {...register("brand")}
+                                defaultValue={currentAnouncement?.brand}
                                 type="text"
                                 placeholder="Chevrolet"
                                 className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"

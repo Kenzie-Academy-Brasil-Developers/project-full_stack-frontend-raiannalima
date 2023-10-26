@@ -19,7 +19,7 @@ export const Modal_edit_perfil = () => {
     }
 
     return (
-        <div className="modal-wrapper z-[1000] w-full h-full bg-modalWrapper fixed top-0 left-0 flex justify-center overflow-auto">
+        <div className="modal-wrapper z-[3000] w-full h-full bg-modalWrapper fixed top-0 left-0 flex justify-center overflow-auto">
             <div className="modal w-[32.5rem] h-[50.625rem] bg-whiteFixed rounded-lg py-4 px-6 mt-[5rem] mb-[5rem]">
                 <div className="modal-header flex justify-between mb-[1.0625rem]">
                     <h2 className="font-lexend text-grey1 text-base font-medium">

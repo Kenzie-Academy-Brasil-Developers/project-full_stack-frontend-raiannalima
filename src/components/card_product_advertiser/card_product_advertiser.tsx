@@ -56,7 +56,7 @@ export const Card_product_advertiser = ({ anouncement }: IPropAnouncement) => {
                     Editar
                 </button>
                 <button onClick={() => {
-                    getAnouncementById(anouncement.id)
+                    getAnouncementById(anouncement.id.toString())
                 }} type="button" className="h-[2.375rem] flex items-center justify-center border-2 border-grey1 py-3 px-5 rounded">
                     Ver detalhes
                 </button>
