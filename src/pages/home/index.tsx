@@ -4,13 +4,20 @@ import { Header_home } from "../../components/header_home/header_home"
 import { StyledContainer, StyledGradient } from "./style"
 import { useContext } from "react";
 import { AnouncementContext } from "../../providers/AnouncementContext";
+import { UserContext } from "../../providers/UserContext";
+import { Header_profile } from "../../components/header_profile/header_profile";
+import { Header_profile_advertiser } from "../../components/header_profile_advertiser/header_profile_advertiser";
 
 export const Home = () => {
     const { anouncements } = useContext(AnouncementContext);
+    const { user } = useContext(UserContext);
+    console.log(user)
 
     return (
         <>
-            <Header_home />
+            {
+                user?.typeAccount === 'Comprador' ? <Header_profile /> : user?.typeAccount === 'Anunciante' ? <Header_profile_advertiser /> : <Header_home />
+            }
             <StyledContainer>
             </StyledContainer>
             <StyledGradient>
@@ -25,7 +32,7 @@ export const Home = () => {
                 <ul className="container flex flex-wrap gap-12 justify-center items-center">
                     {
                         anouncements?.map((anouncement) => (
-                            <Card_product anouncement={anouncement} key={anouncement.brand}></Card_product>
+                            <Card_product anouncement={anouncement} key={anouncement.id}></Card_product>
                         ))
                     }
                     {/* <Card_product></Card_product>

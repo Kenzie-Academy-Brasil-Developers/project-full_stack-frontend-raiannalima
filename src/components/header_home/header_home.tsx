@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 
 export const Header_home = () => {
+    console.log("Header home")
     return (
         <header className="bg-grey10 h-20 w-full border-b-2 border-grey6">
             <div className="container flex items-center h-full justify-between">

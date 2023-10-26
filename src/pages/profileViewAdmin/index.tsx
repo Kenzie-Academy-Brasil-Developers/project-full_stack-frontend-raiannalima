@@ -1,7 +1,7 @@
 import { Card_product_advertiser } from "../../components/card_product_advertiser/card_product_advertiser";
 import { Footer } from "../../components/footer/footer";
 import { Modal_create_anouncement } from "../../components/modal_create_anouncement/modal_create_anouncement";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../providers/UserContext";
 import { AnouncementContext } from "../../providers/AnouncementContext";
 import { Modal_edit_anouncement } from "../../components/modal_edit_anouncement/modal_edit_anouncement";
@@ -10,10 +10,16 @@ import { Modal_edit_perfil } from "../../components/modal_edit_perfil/modal_edit
 
 export const ProfileViewAdmin = () => {
     const { user, isModalEditUserOpen } = useContext(UserContext);
-    const { anouncementsAdvertiser } = useContext(AnouncementContext);
+    const { anouncementsAdvertiser, getAnouncementsAdvertiser } = useContext(AnouncementContext);
 
     const { isModalCreateOpen, openModalCreate } = useContext(AnouncementContext);
     const { isModalEditOpen } = useContext(AnouncementContext);
+
+    useEffect(() => {
+        if (user) {
+            getAnouncementsAdvertiser(user!.id)
+        }
+    }, [user])
 
     return (
         <>

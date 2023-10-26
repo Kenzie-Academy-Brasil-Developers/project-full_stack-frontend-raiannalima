@@ -137,7 +137,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
             if (newUser.typeAccount == "Anunciante") {
                 navigate("/profile-advertiser");
             } else {
-                navigate("/profile-user");
+                navigate("/");
             }
 
         } catch (error) {

@@ -7,6 +7,8 @@ export const Header_profile_advertiser = () => {
 
     const [isModalOptionsUser, setIsModalOptionsUser] = useState(false);
 
+    console.log("Header vendedor")
+
     const toggleModalOptionsUser = () => {
         setIsModalOptionsUser(!isModalOptionsUser);
     };
@@ -31,12 +33,15 @@ export const Header_profile_advertiser = () => {
                         </span>
                     </div>
                     {isModalOptionsUser &&
-                        <div className="absolute top-[79px] left-[-3px] w-[10.5rem] bg-grey9 flex flex-col items-start gap-4 pl-[1.375rem] pr-[1.375rem] pt-[1.3125rem] pb-[1.3125rem] shadow-[0_4px_40px_-10px_rgba(0,0,0,0.25)]">
+                        <div className="z-[2000] absolute top-[79px] left-[-3px] w-[10.5rem] bg-grey9 flex flex-col items-start gap-4 pl-[1.375rem] pr-[1.375rem] pt-[1.3125rem] pb-[1.3125rem] shadow-[0_4px_40px_-10px_rgba(0,0,0,0.25)]">
                             <button onClick={openModalEditUser} type="button" className="text-grey2 font-normal">
                                 Editar perfil
                             </button>
                             <button type="button" className="text-grey2 font-normal">
                                 Editar endereço
+                            </button>
+                            <button type="button" className="text-grey2 font-normal">
+                                Meus anúncios
                             </button>
                             <button onClick={userLogout} type="button" className="text-grey2 font-normal">
                                 Sair

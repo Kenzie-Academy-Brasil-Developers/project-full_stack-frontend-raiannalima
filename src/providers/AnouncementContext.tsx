@@ -44,6 +44,11 @@ interface IImage {
     image_url: string;
 }
 
+interface IComment {
+    id: number;
+    comment: string;
+}
+
 interface IAnouncementContext {
     anouncement: IAnouncement | IAnouncementId | null;
     isModalCreateOpen: boolean;
@@ -63,6 +68,10 @@ interface IAnouncementContext {
     editAnouncement: (anouncementId: number, formData: TAnouncementFormData) => void;
     anouncementsAdvertiser: IAnouncementId[] | null;
     isModalDeleteOpen: boolean;
+    getAnouncementsAdvertiser: (userId: string) => void;
+    anouncementById: IAnouncementId | null;
+    getAnouncementById: (anouncementId: number) => void;
+    getCommentsByIdAnouncement: (anouncementId: number) => void;
 }
 
 export const AnouncementContext = createContext({} as IAnouncementContext);
@@ -77,17 +86,15 @@ export const AnouncementProvider = ({
     const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
     const [currentAnouncement, setCurrentAnouncement] = useState<IAnouncementId | null>(null)
     const [anouncementsAdvertiser, setAnouncementsAdvertiser] = useState<IAnouncementId[] | null>(null);
+    const [anouncementById, setAnouncementById] = useState<IAnouncementId | null>(null);
+    const [comments, setComments] = useState<IComment[]>([]);
 
     const navigate = useNavigate();
-    const idUser = localStorage.getItem("@USERID");
 
     useEffect(() => {
         getAnouncements()
     }, [anouncement])
 
-    useEffect(() => {
-        getAnouncementsAdvertiser(idUser)
-    }, [anouncement])
 
     const closeModalCreate = () => {
         setIsModalCreateOpen(false);
@@ -155,6 +162,17 @@ export const AnouncementProvider = ({
         }
     }
 
+    const getAnouncementById = async (anouncementId: number) => {
+        try {
+            const anouncement = await api.get(`anouncement/${anouncementId}`);
+            console.log(anouncement)
+            setAnouncementById(anouncement.data);
+            navigate(`product/${anouncementId}`);
+        } catch (error) {
+            const showError = error as AxiosError<AxiosError>;
+            console.error(showError);
+        }
+    }
 
     const removeAnouncement = async (anouncementId: number) => {
         const token = localStorage.getItem("@TOKEN");
@@ -172,6 +190,18 @@ export const AnouncementProvider = ({
             window.location.reload()
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    /* Comments */
+
+    const getCommentsByIdAnouncement = async (anouncementId: number) => {
+        try {
+            const allComments = await api.get(`comment/${anouncementId}`);
+            setComments(allComments.data)
+        } catch (error) {
+            const showError = error as AxiosError<AxiosError>;
+            console.error(showError);
         }
     }
 
@@ -194,7 +224,12 @@ export const AnouncementProvider = ({
                 editAnouncement,
                 anouncementsAdvertiser,
                 closeModalDelete,
-                openModalDelete
+                openModalDelete,
+                getAnouncementsAdvertiser,
+                getAnouncementById,
+                isModalDeleteOpen,
+                anouncementById,
+                getCommentsByIdAnouncement
             }}
         >
             {children}
@@ -202,5 +237,11 @@ export const AnouncementProvider = ({
     );
 };
 
-// fazer um get;
-// armazenar em um estado 
+
+
+
+
+
+// Fazer uma rota de get por id do anúncio; 
+// Armazenar este anúncio em um estado; 
+// Pegar este estado chamar na página de produto e renderizar na tela o anúncio. 

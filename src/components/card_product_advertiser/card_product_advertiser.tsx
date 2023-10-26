@@ -1,6 +1,7 @@
 import { ReactNode, useContext, useState } from "react";
 import { AnouncementContext, IAnouncementId } from "../../providers/AnouncementContext";
 import { UserContext } from "../../providers/UserContext";
+import { Link } from "react-router-dom";
 
 interface IPropAnouncement {
     anouncement: IAnouncementId;
@@ -9,6 +10,7 @@ interface IPropAnouncement {
 
 export const Card_product_advertiser = ({ anouncement }: IPropAnouncement) => {
     const { user } = useContext(UserContext);
+    const { getAnouncementById } = useContext(AnouncementContext);
 
     const { openModalEdit, setCurrentAnouncement } = useContext(AnouncementContext);
 
@@ -53,10 +55,14 @@ export const Card_product_advertiser = ({ anouncement }: IPropAnouncement) => {
                 }} type="button" className="h-[2.375rem] flex items-center justify-center border-2 border-grey1 py-3 px-5 mr-4 rounded">
                     Editar
                 </button>
-                <button type="button" className="h-[2.375rem] flex items-center justify-center border-2 border-grey1 py-3 px-5 rounded">
+                <button onClick={() => {
+                    getAnouncementById(anouncement.id)
+                }} type="button" className="h-[2.375rem] flex items-center justify-center border-2 border-grey1 py-3 px-5 rounded">
                     Ver detalhes
                 </button>
             </div>
         </li>
     )
 }
+
+// to={`/product/${anouncement.id}`} 

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserContext";
 import { ReactNode } from "react";
-import { IAnouncementId } from "../../providers/AnouncementContext";
+import { AnouncementContext, IAnouncementId } from "../../providers/AnouncementContext";
 
 interface IPropAnouncement {
     anouncement: IAnouncementId;
@@ -10,9 +10,12 @@ interface IPropAnouncement {
 
 export const Card_product = ({ anouncement }: IPropAnouncement) => {
     const { user } = useContext(UserContext);
+    const { getAnouncementById } = useContext(AnouncementContext)
 
     return (
-        <li className="w-[16rem] h-[28.875rem] overflow-y-scroll">
+        <li onClick={() => {
+            getAnouncementById(anouncement.id)
+        }} className="w-[16rem] h-[28.875rem] overflow-y-scroll">
             <div className="flex justify-center items-center card-product-img bg-grey7 h-[9.5rem] mb-4">
                 <img src={anouncement?.cover_image} alt="Imagem do carro vinculado ao anúncio." className="max-h-[9.5rem]"></img>
             </div>

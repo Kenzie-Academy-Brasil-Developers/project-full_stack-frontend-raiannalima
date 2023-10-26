@@ -13,8 +13,10 @@ export const RoutesMain = () => {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/user" element={<Register />}></Route>
             <Route path="/product/:id" element={<Product />}></Route>
-            <Route path="/profile-user" element={<ProfileViewUser />}></Route>
+            <Route path="/profile-user/:id" element={<ProfileViewUser />}></Route>
             <Route path="/profile-advertiser" element={<ProfileViewAdmin />}></Route>
         </Routes>
     )
 }
+
+// profile-user/:id -> Para ver o perfil do anunciante
