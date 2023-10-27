@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { TAnouncementFormData } from "../schemas/anouncement_schema";
+import { TCommentFormData } from "../schemas/comment_schema";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import { AxiosError } from "axios";
@@ -77,6 +78,7 @@ interface IAnouncementContext {
     getAnouncementById: (anouncementId: string) => void;
     getCommentsByIdAnouncement: (anouncementId: string) => void;
     comments: IComment[] | [];
+    createComment: (anouncementId: string, formData: string) => void;
 }
 
 export const AnouncementContext = createContext({} as IAnouncementContext);
@@ -130,7 +132,6 @@ export const AnouncementProvider = ({
             const token = localStorage.getItem("@TOKEN");
             api.defaults.headers.common.authorization = `Bearer ${token}`;
             const { data } = await api.post("anouncement", formData);
-            console.log(data)
             // setAnouncement(data);
             getAnouncements()
         } catch (error) {
@@ -209,6 +210,19 @@ export const AnouncementProvider = ({
         }
     }
 
+    const createComment = async (anouncementId: string, formData: TCommentFormData) => {
+        try {
+            const token = localStorage.getItem("@TOKEN");
+            api.defaults.headers.common.authorization = `Bearer ${token}`;
+            const { data } = await api.post(`comment/${anouncementId}`, formData);
+
+            getCommentsByIdAnouncement(anouncementId)
+        } catch (error) {
+            const showError = error as AxiosError<AxiosError>;
+            console.error(showError);
+        }
+    }
+
     return (
         <AnouncementContext.Provider
             value={{
@@ -234,7 +248,8 @@ export const AnouncementProvider = ({
                 isModalDeleteOpen,
                 anouncementById,
                 getCommentsByIdAnouncement,
-                comments
+                comments,
+                createComment
             }}
         >
             {children}

@@ -7,12 +7,18 @@ import { UserContext } from "../../providers/UserContext";
 import { AnouncementContext } from "../../providers/AnouncementContext";
 import { Header_profile_advertiser } from "../../components/header_profile_advertiser/header_profile_advertiser";
 import { Header_home } from "../../components/header_home/header_home";
+import { commentFormSchema } from "../../schemas/comment_schema";
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export const Product = () => {
     const { user } = useContext(UserContext);
-    const { anouncementById, comments, getAnouncementById, getCommentsByIdAnouncement } = useContext(AnouncementContext);
-
+    const { anouncementById, comments, getAnouncementById, getCommentsByIdAnouncement, createComment } = useContext(AnouncementContext);
     const { id } = useParams()
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(commentFormSchema)
+    })
 
     useEffect(() => {
         getAnouncementById(id!)
@@ -20,9 +26,9 @@ export const Product = () => {
         console.log(comments)
     }, [])
 
-    // useEffect(() => {
-    //     getCommentsByIdAnouncement(id!)
-    // }, [])
+    const submit = (formData: any) => {
+        createComment(id!, formData)
+    }
 
     return (
         <>
@@ -89,10 +95,10 @@ export const Product = () => {
                                     {user?.name}
                                 </span>
                             </div>
-                            <form>
-                                <textarea className="w-full min-h-[8rem] border-[2px] border-grey7 relative"></textarea>
+                            <form onSubmit={handleSubmit(submit)}>
+                                <textarea {...register("comment")} className="w-full min-h-[8rem] border-[2px] border-grey7 relative"></textarea>
                                 <button
-                                    type="button"
+                                    type="submit"
                                     className="absolute h-[2.375rem] py-3 px-5 flex justify-center items-center bg-brand1 rounded font-semibold text-whiteFixed right-[66px] bottom-[51px]"
                                 >
                                     Comentar

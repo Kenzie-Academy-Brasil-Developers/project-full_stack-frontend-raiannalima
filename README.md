@@ -40,6 +40,12 @@ npm run dev
 
 ## Conhecendo o projeto - Principais features:
 
+### /: 
+
+#### -> Ver todos os anúncios; 
+#### -> Clicar em um anúncio para ver detalhes; 
+#### -> Se estiver logado como comprador, terá a opção de editar perfil.
+
 ### /login: 
 
 #### -> Efetuar o login. 
@@ -48,10 +54,23 @@ npm run dev
 
 #### -> Efetuar o cadastro. 
 
-### /profile-advertiser: 
+### /profile-advertiser: (Este é o perfil de anunciante)
 
 #### -> Criar anúncio;
 #### -> Editar an´úncio; 
+#### -> Deletar anúncio; 
+#### -> Ver detalhes do anúncio; 
+#### -> Editar perfil; 
+
+### /product/:id: 
+
+#### -> Ver anúncio, os dados do anunciante e os comentários;  
+#### -> Clicar no botão para abrir o perfil do anunciante;
+#### -> Fazer um comentário se estive logado; 
+
+### /profile-user/:id: 
+
+#### -> Ver todos os anúncios do anunciante; 
 
 
 
