@@ -16,11 +16,13 @@ export const Product = () => {
 
     useEffect(() => {
         getAnouncementById(id!)
+        getCommentsByIdAnouncement(id!)
+        console.log(comments)
     }, [])
 
-    useEffect(() => {
-        getCommentsByIdAnouncement(id!)
-    }, [])
+    // useEffect(() => {
+    //     getCommentsByIdAnouncement(id!)
+    // }, [])
 
     return (
         <>
@@ -129,7 +131,7 @@ export const Product = () => {
                             <Link
                                 type="button"
                                 className="py-3 px-7 rounded bg-grey0 text-whiteFixed text-base"
-                                to={`/profile-advertiser/${anouncementById?.user.id}`}
+                                to={`/profile-user/${anouncementById?.user.id}`}
                             >
                                 Ver todos anúncios
                             </Link>
@@ -141,7 +143,3 @@ export const Product = () => {
         </>
     );
 };
-
-function getCommentsByIdAnouncement(arg0: boolean) {
-    throw new Error("Function not implemented.");
-}

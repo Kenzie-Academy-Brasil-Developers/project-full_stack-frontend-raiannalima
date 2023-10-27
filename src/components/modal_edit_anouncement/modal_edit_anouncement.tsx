@@ -109,6 +109,7 @@ export const Modal_edit_anouncement = () => {
                             </label>
                             <input
                                 {...register("model")}
+                                defaultValue={currentAnouncement?.model}
                                 type="text"
                                 placeholder="Camaro ss 6.2 v8 16v"
                                 className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"
@@ -118,6 +119,7 @@ export const Modal_edit_anouncement = () => {
                                     <label className="text-sm text-grey1 font-medium">Ano</label>
                                     <input
                                         {...register("year")}
+                                        defaultValue={currentAnouncement?.year}
                                         type="number"
                                         placeholder="2018"
                                         className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
@@ -129,6 +131,7 @@ export const Modal_edit_anouncement = () => {
                                     </label>
                                     <input
                                         {...register("fuel")}
+                                        defaultValue={currentAnouncement?.fuel}
                                         type="text"
                                         placeholder="Gasolina/Etanol"
                                         className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
@@ -142,6 +145,7 @@ export const Modal_edit_anouncement = () => {
                                     </label>
                                     <input
                                         {...register("mileage")}
+                                        defaultValue={currentAnouncement?.mileage}
                                         type="number"
                                         placeholder="30.000"
                                         className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
@@ -151,6 +155,7 @@ export const Modal_edit_anouncement = () => {
                                     <label className="text-sm text-grey1 font-medium">Cor</label>
                                     <input
                                         {...register("color")}
+                                        defaultValue={currentAnouncement?.color}
                                         type="text"
                                         placeholder="Branco"
                                         className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
@@ -164,6 +169,7 @@ export const Modal_edit_anouncement = () => {
                                     </label>
                                     <input
                                         {...register("price_fipe")}
+                                        defaultValue={currentAnouncement?.price_fipe}
                                         type="text"
                                         placeholder="R$ 48.000,00"
                                         className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
@@ -175,6 +181,7 @@ export const Modal_edit_anouncement = () => {
                                     </label>
                                     <input
                                         {...register("price")}
+                                        defaultValue={currentAnouncement?.price}
                                         type="text"
                                         placeholder="R$ 50.000,00"
                                         className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mt-[0.3125rem]"
@@ -224,6 +231,7 @@ export const Modal_edit_anouncement = () => {
                             </label>
                             <input
                                 {...register("cover_image")}
+                                defaultValue={currentAnouncement?.cover_image}
                                 type="url"
                                 placeholder="https://image.com"
                                 className="border-[2px] border-grey7 bg-transparent rounded px-4 py-2.5 mb-6"

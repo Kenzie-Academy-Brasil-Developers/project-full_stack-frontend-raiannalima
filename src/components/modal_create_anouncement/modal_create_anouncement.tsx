@@ -58,6 +58,7 @@ export const Modal_create_anouncement = (title: any) => {
         const formDataFinal = { ...rest, images: arrayFinalImages }
 
         createAnouncement(formDataFinal);
+        closeModalCreate();
     };
 
     const [additionalImages, setAdditionalImages] = useState<string[]>([]);

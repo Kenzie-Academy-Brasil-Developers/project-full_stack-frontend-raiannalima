@@ -170,7 +170,6 @@ export const AnouncementProvider = ({
     const getAnouncementById = async (anouncementId: string) => {
         try {
             const anouncement = await api.get(`anouncement/${anouncementId}`);
-            console.log(anouncement)
             setAnouncementById(anouncement.data);
             navigate(`product/${anouncementId}`);
         } catch (error) {

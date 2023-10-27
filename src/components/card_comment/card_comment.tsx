@@ -6,6 +6,9 @@ interface IPropComment {
 
 export const Card_comment = ({ comment }: IPropComment) => {
 
+    console.log("comment card:")
+    console.log(comment);
+
     return (
         <li>
             <div className="flex items-center mb-3">

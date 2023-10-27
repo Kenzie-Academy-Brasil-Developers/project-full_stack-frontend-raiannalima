@@ -11,7 +11,6 @@ import { Header_profile_advertiser } from "../../components/header_profile_adver
 export const Home = () => {
     const { anouncements } = useContext(AnouncementContext);
     const { user } = useContext(UserContext);
-    console.log(user)
 
     return (
         <>
