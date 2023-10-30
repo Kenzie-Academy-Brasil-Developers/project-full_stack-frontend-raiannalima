@@ -7,13 +7,14 @@ import { UserContext } from "../../providers/UserContext";
 import { AnouncementContext } from "../../providers/AnouncementContext";
 import { Header_profile_advertiser } from "../../components/header_profile_advertiser/header_profile_advertiser";
 import { Header_home } from "../../components/header_home/header_home";
-import { commentFormSchema } from "../../schemas/comment_schema";
+import { TCommentFormData, commentFormSchema } from "../../schemas/comment_schema";
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Modal_edit_perfil } from "../../components/modal_edit_perfil/modal_edit_perfil";
 
 export const Product = () => {
-    const { user } = useContext(UserContext);
-    const { anouncementById, comments, getAnouncementById, getCommentsByIdAnouncement, createComment } = useContext(AnouncementContext);
+    const { user, isModalEditUserOpen } = useContext(UserContext);
+    const { anouncementById, comments, getAnouncementById, getCommentsByIdAnouncement, createComment, returnComment } = useContext(AnouncementContext);
     const { id } = useParams()
 
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -26,19 +27,22 @@ export const Product = () => {
         console.log(comments)
     }, [])
 
-    const submit = (formData: any) => {
+    const submit = (formData: TCommentFormData) => {
         createComment(id!, formData)
     }
 
     return (
         <>
+            {isModalEditUserOpen ? (
+                <Modal_edit_perfil title={"Editar perfil."} />
+            ) : null}
             {
                 user?.typeAccount === 'Comprador' ? <Header_profile /> : user?.typeAccount === 'Anunciante' ? <Header_profile_advertiser /> : <Header_home />
             }
             <div className="h-full w-full min-h-screen bg-gradient-background-product">
                 <section className="flex container">
                     <main className="w-[90%] mr-[2.875rem]">
-                        <div className="w-full bg-grey10 mt-[2.5rem] mb-4 flex justify-center items-center rounded">
+                        <div className="w-full bg-grey10 p-7 mt-[2.5rem] mb-4 flex justify-center items-center rounded">
                             <img
                                 src={anouncementById?.cover_image}
                                 className="max-w-[31.25rem] max-h-[18.75rem]"
@@ -86,25 +90,29 @@ export const Product = () => {
                                 ))}
                             </ul>
                         </div>
-                        <div className="w-full bg-grey10 rounded py-7 px-11 relative mb-8">
-                            <div className="flex items-center mb-[0.9375rem]">
-                                <div className="w-8 h-8 mr-2 flex justify-center items-center bg-brand1 rounded-[50%] text-sm text-whiteFixed font-medium">
-                                    {user?.name.charAt(0)}
+                        {
+                            user ? (
+                                <div className="w-full bg-grey10 rounded py-7 px-11 relative mb-8">
+                                    <div className="flex items-center mb-[0.9375rem]">
+                                        <div className="w-8 h-8 mr-2 flex justify-center items-center bg-brand1 rounded-[50%] text-sm text-whiteFixed font-medium">
+                                            {user?.name.charAt(0)}
+                                        </div>
+                                        <span className="text-grey1 text-sm font-medium">
+                                            {user?.name}
+                                        </span>
+                                    </div>
+                                    <form onSubmit={handleSubmit(submit)}>
+                                        <textarea {...register("comment")} className="w-full min-h-[8rem] border-[2px] border-grey7 relative"></textarea>
+                                        <button
+                                            type="submit"
+                                            className="absolute h-[2.375rem] py-3 px-5 flex justify-center items-center bg-brand1 rounded font-semibold text-whiteFixed right-[66px] bottom-[51px]"
+                                        >
+                                            Comentar
+                                        </button>
+                                    </form>
                                 </div>
-                                <span className="text-grey1 text-sm font-medium">
-                                    {user?.name}
-                                </span>
-                            </div>
-                            <form onSubmit={handleSubmit(submit)}>
-                                <textarea {...register("comment")} className="w-full min-h-[8rem] border-[2px] border-grey7 relative"></textarea>
-                                <button
-                                    type="submit"
-                                    className="absolute h-[2.375rem] py-3 px-5 flex justify-center items-center bg-brand1 rounded font-semibold text-whiteFixed right-[66px] bottom-[51px]"
-                                >
-                                    Comentar
-                                </button>
-                            </form>
-                        </div>
+                            ) : null
+                        }
                     </main>
                     <aside className="w-[90%]">
                         <div className="w-full bg-grey10 mt-[2.5rem] py-7 px-11 rounded">
@@ -121,7 +129,7 @@ export const Product = () => {
                         </div>
                         <div className="w-full bg-grey10 mt-[2.5rem] py-7 px-11 rounded flex justify-center items-center flex-col">
                             <div className="flex gap-2 items-center">
-                                <div className="w-[104px] h-[104px] flex justify-center items-center bg-brand1 rounded-[50%] text-sm text-whiteFixed font-medium mb-[1.75rem]">
+                                <div className="w-[104px] h-[104px] flex justify-center items-center bg-brand1 rounded-[50%] text-4xl text-whiteFixed font-medium mb-[1.75rem]">
                                     {user?.name.charAt(0)}
                                 </div>
                                 {/* <p className="bg-brand1 rounded-full w-10 h-10 text-center pt-1 text-whiteFixed font-medium ">

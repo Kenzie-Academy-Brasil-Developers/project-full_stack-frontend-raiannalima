@@ -7,12 +7,14 @@ import { AnouncementContext } from "../../providers/AnouncementContext";
 import { Modal_edit_anouncement } from "../../components/modal_edit_anouncement/modal_edit_anouncement";
 import { Header_profile_advertiser } from "../../components/header_profile_advertiser/header_profile_advertiser";
 import { Modal_edit_perfil } from "../../components/modal_edit_perfil/modal_edit_perfil";
+import { Modal_delete_anouncement } from "../../components/modal_delete_anouncement/modal_delete_anouncement";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const ProfileViewAdmin = () => {
     const { user, isModalEditUserOpen } = useContext(UserContext);
     const { anouncementsAdvertiser, getAnouncementsAdvertiser } = useContext(AnouncementContext);
 
-    const { isModalCreateOpen, openModalCreate } = useContext(AnouncementContext);
+    const { isModalCreateOpen, openModalCreate, isModalDeleteOpen } = useContext(AnouncementContext);
     const { isModalEditOpen } = useContext(AnouncementContext);
 
     useEffect(() => {
@@ -20,6 +22,12 @@ export const ProfileViewAdmin = () => {
             getAnouncementsAdvertiser(user!.id)
         }
     }, [user])
+
+    const navigate = useNavigate();
+
+    if (user?.typeAccount === 'Comprador' || !user) {
+        navigate("/")
+    }
 
     return (
         <>
@@ -31,6 +39,9 @@ export const ProfileViewAdmin = () => {
             ) : null}
             {isModalEditUserOpen ? (
                 <Modal_edit_perfil title={"Editar perfil."} />
+            ) : null}
+            {isModalDeleteOpen ? (
+                <Modal_delete_anouncement title={"Deletar Anúncio."} />
             ) : null}
             <Header_profile_advertiser />
             <div className="h-full w-full min-h-screen bg-gradient-background-product-2 pt-[4.6875rem]">

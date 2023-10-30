@@ -7,13 +7,17 @@ import { AnouncementContext } from "../../providers/AnouncementContext";
 import { UserContext } from "../../providers/UserContext";
 import { Header_profile } from "../../components/header_profile/header_profile";
 import { Header_profile_advertiser } from "../../components/header_profile_advertiser/header_profile_advertiser";
+import { Modal_edit_perfil } from "../../components/modal_edit_perfil/modal_edit_perfil";
 
 export const Home = () => {
     const { anouncements } = useContext(AnouncementContext);
-    const { user } = useContext(UserContext);
+    const { user, isModalEditUserOpen } = useContext(UserContext);
 
     return (
         <>
+            {isModalEditUserOpen ? (
+                <Modal_edit_perfil title={"Editar perfil."} />
+            ) : null}
             {
                 user?.typeAccount === 'Comprador' ? <Header_profile /> : user?.typeAccount === 'Anunciante' ? <Header_profile_advertiser /> : <Header_home />
             }

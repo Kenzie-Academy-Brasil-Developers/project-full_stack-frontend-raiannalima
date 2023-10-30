@@ -53,7 +53,7 @@ const editFormSchema = z.object({
     cpf: z.string().min(11, "O cpf deve ter no mínimo 11 digítos.").max(11, "O cpf deve ter no máximo 11 dígitos.").nonempty("O cpf é obrigatório."),
     tel: z.string().min(10, "O telefone deve conter no mínimo 10 digítos.").max(12, "O telefone deve contar no máximo 12 dígitos."),
     birth: z.string().nonempty("A data de nascimento é obrigatória."),
-    description: z.string().max(300)
+    description: z.string().max(300, "A descrição tem que ter no máximo 300 caracteres.")
 })
 
 export type TRegisterFormData = z.infer<typeof registerSchema>;

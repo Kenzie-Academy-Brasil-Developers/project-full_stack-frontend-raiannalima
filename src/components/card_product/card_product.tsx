@@ -15,7 +15,7 @@ export const Card_product = ({ anouncement }: IPropAnouncement) => {
     return (
         <li onClick={() => {
             getAnouncementById(anouncement.id)
-        }} className="w-[16rem] h-[28.875rem] overflow-y-scroll">
+        }} className="w-[16rem] h-[28.875rem] overflow-y-scroll cursor-pointer">
             <div className="flex justify-center items-center card-product-img bg-grey7 h-[9.5rem] mb-4">
                 <img src={anouncement?.cover_image} alt="Imagem do carro vinculado ao anúncio." className="max-h-[9.5rem]"></img>
             </div>

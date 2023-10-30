@@ -24,7 +24,7 @@ export const Header_profile_advertiser = () => {
                     </Link>
                 </div>
                 <div className="header_home_nav relative border-l-2 border-grey6 h-full flex items-center">
-                    <div onClick={toggleModalOptionsUser} className="flex items-center">
+                    <div onClick={toggleModalOptionsUser} className="flex items-center cursor-pointer">
                         <div className="w-8 h-8 mr-[0.5rem] ml-[2.75rem] flex justify-center items-center bg-brand1 rounded-[50%] text-sm text-whiteFixed font-medium">
                             {user?.name.charAt(0)}
                         </div>
@@ -40,9 +40,9 @@ export const Header_profile_advertiser = () => {
                             <button type="button" className="text-grey2 font-normal">
                                 Editar endereço
                             </button>
-                            <button type="button" className="text-grey2 font-normal">
+                            <Link to="/profile-advertiser" type="button" className="text-grey2 font-normal">
                                 Meus anúncios
-                            </button>
+                            </Link>
                             <button onClick={userLogout} type="button" className="text-grey2 font-normal">
                                 Sair
                             </button>

@@ -8,7 +8,7 @@ import { anouncementFormSchema } from "../../schemas/anouncement_schema";
 import trash from "../../assets/trash.svg";
 
 export const Modal_edit_anouncement = () => {
-    const { closeModalEdit, removeAnouncement, currentAnouncement, editAnouncement } =
+    const { closeModalEdit, removeAnouncement, currentAnouncement, editAnouncement, openModalDelete } =
         useContext(AnouncementContext);
     const [published, setPublished] = useState(true);
 
@@ -75,7 +75,7 @@ export const Modal_edit_anouncement = () => {
 
     return (
         <div className="modal-wrapper w-full h-full bg-modalWrapper fixed top-0 left-0 flex justify-center overflow-auto">
-            <div className="modal w-[32.5rem] h-[78.625rem] bg-whiteFixed rounded-lg py-4 px-6 mt-[5rem] mb-[5rem]">
+            <div className="modal w-[32.5rem] h-[78.625rem] overflow-scroll bg-whiteFixed rounded-lg py-4 px-6 mt-[5rem] mb-[5rem]">
                 <div className="modal-header flex justify-between mb-[1.0625rem]">
                     <h2 className="font-lexend text-grey1 text-base font-medium">
                         Editar anúncio
@@ -291,7 +291,7 @@ export const Modal_edit_anouncement = () => {
                                 Cancelar
                             </button>
                             <button
-                                onClick={() => removeAnouncement(currentAnouncement!.id)}
+                                onClick={() => openModalDelete()}
                                 type="button"
                                 className="w-[9.375rem] h-[3rem] bg-alert2 rounded font-semibold text-alert1 mr-[0.3125rem]"
                             >
@@ -310,3 +310,5 @@ export const Modal_edit_anouncement = () => {
         </div>
     );
 };
+
+// onClick={() => removeAnouncement(currentAnouncement!.id)}

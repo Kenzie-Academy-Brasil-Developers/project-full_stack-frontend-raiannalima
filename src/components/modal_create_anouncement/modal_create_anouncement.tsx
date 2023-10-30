@@ -75,7 +75,7 @@ export const Modal_create_anouncement = (title: any) => {
 
     return (
         <div className="modal-wrapper w-full h-full bg-modalWrapper fixed top-0 left-0 flex justify-center overflow-auto">
-            <div className="modal w-[32.5rem] h-[84.625rem] bg-whiteFixed rounded-lg py-4 px-6 mt-[5rem] mb-[5rem]">
+            <div className="modal w-[32.5rem] h-[84.625rem] overflow-scroll bg-whiteFixed rounded-lg py-4 px-6 mt-[5rem] mb-[5rem]">
                 <div className="modal-header flex justify-between mb-[1.0625rem]">
                     <h2 className="font-lexend text-grey1 text-base font-medium">
                         Criar anúncio

@@ -1,10 +1,11 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { TAnouncementFormData } from "../schemas/anouncement_schema";
 import { TCommentFormData } from "../schemas/comment_schema";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import { AxiosError } from "axios";
 import { IComment, IImage, IUser } from "../interfaces";
+import { UserContext } from "./UserContext";
 
 interface IAnouncementProviderProps {
     children: React.ReactNode;
@@ -52,6 +53,13 @@ interface IComment {
     anouncement: IAnouncementId;
 }
 
+interface ICommentReturn {
+    id: number,
+    comment: string,
+    user: IUser,
+    anouncement: IAnouncementId
+}
+
 // MEXI NA ICOMMENT ADICIONANDO O USER E O ANOUNCEMENT. ANTES NÃO TINHA ESSES DADOS. 
 
 interface IAnouncementContext {
@@ -78,7 +86,8 @@ interface IAnouncementContext {
     getAnouncementById: (anouncementId: string) => void;
     getCommentsByIdAnouncement: (anouncementId: string) => void;
     comments: IComment[] | [];
-    createComment: (anouncementId: string, formData: string) => void;
+    createComment: (anouncementId: string, formData: TCommentFormData) => void;
+    returnComment: ICommentReturn | null;
 }
 
 export const AnouncementContext = createContext({} as IAnouncementContext);
@@ -95,6 +104,9 @@ export const AnouncementProvider = ({
     const [anouncementsAdvertiser, setAnouncementsAdvertiser] = useState<IAnouncementId[] | null>(null);
     const [anouncementById, setAnouncementById] = useState<IAnouncementId | null>(null);
     const [comments, setComments] = useState<IComment[]>([]);
+    const [returnComment, setReturnComment] = useState<ICommentReturn | null>(null)
+
+    const { user } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -124,6 +136,7 @@ export const AnouncementProvider = ({
     };
 
     const openModalDelete = () => {
+        setIsModalEditOpen(false)
         setIsModalDeleteOpen(true);
     };
 
@@ -133,7 +146,7 @@ export const AnouncementProvider = ({
             api.defaults.headers.common.authorization = `Bearer ${token}`;
             const { data } = await api.post("anouncement", formData);
             // setAnouncement(data);
-            getAnouncements()
+            getAnouncementsAdvertiser(user!.id);
         } catch (error) {
             const showError = error as AxiosError<AxiosError>;
             console.error(showError);
@@ -215,8 +228,9 @@ export const AnouncementProvider = ({
             const token = localStorage.getItem("@TOKEN");
             api.defaults.headers.common.authorization = `Bearer ${token}`;
             const { data } = await api.post(`comment/${anouncementId}`, formData);
-
-            getCommentsByIdAnouncement(anouncementId)
+            setReturnComment(data)
+            setComments([...comments, data])
+            // getCommentsByIdAnouncement(anouncementId)
         } catch (error) {
             const showError = error as AxiosError<AxiosError>;
             console.error(showError);
@@ -249,7 +263,8 @@ export const AnouncementProvider = ({
                 anouncementById,
                 getCommentsByIdAnouncement,
                 comments,
-                createComment
+                createComment,
+                returnComment
             }}
         >
             {children}

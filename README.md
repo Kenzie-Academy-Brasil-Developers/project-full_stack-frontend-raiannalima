@@ -67,11 +67,12 @@ npm run dev
 #### -> Ver anúncio, os dados do anunciante e os comentários;  
 #### -> Clicar no botão para abrir o perfil do anunciante;
 #### -> Fazer um comentário se estive logado; 
+#### -> Se estiver logado, terá a opção de editar perfil.
 
 ### /profile-user/:id: 
 
 #### -> Ver todos os anúncios do anunciante; 
-
+#### -> Se estiver logado, terá a opção de editar perfil.
 
 
 
